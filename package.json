@@ -1,0 +1,11 @@
+{
+  "name": "node-solid-architecture",
+  "version": "1.0.0",
+  "description": "Solid architecture for Node.js with Express.js implementing Clean Architecture. Node.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cerciber",
+  "license": "ISC"
+}
