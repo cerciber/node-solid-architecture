@@ -1,14 +1,17 @@
 // Imports
 const express = require('express')
 const response = require('@src/frameworks/web/express/response')
-const { list } = require('@src/adapters/controllers/listController')
+const usersRoute = require('./usersRoute/usersRoute')
 
 // Instance router
 const router = express.Router()
 
-// Activate path request 
+// Include subpaths
+router.use('/users', usersRoute)
+
+// Default request
 router.get('/', (req, res) => {
-    response.success(req, res, 200, 'Peticion a la raiz', list())
+    response.success(req, res, 200, 'Peticion a la raiz realizada correctamente.', list())
 })
 
 // Exports

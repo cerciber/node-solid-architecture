@@ -1,4 +1,5 @@
 // Imports
+const { v4: uuidv4 } = require('uuid');
 let { database } = require('@src/frameworks/DB/fakeDB/fakeDB')
   
 // List data
@@ -14,6 +15,18 @@ function get(tableName, id) {
     }
     return null;
 }
+
+// Add
+function add(tableName, newItem) {
+    const table = database[tableName];
+    if (table) {
+      const newId = uuidv4();
+      const newItemWithId = { id: newId, ...newItem };
+      table.push(newItemWithId);
+      return newItemWithId;
+    }
+    return null;
+  }
   
 // Update by id
 function update(tableName, id, newData) {
@@ -39,9 +52,11 @@ function remove(tableName, id) {
     return false;
 }
 
+// Exports
 module.exports = {
     list,
     get,
+    add,
     update,
     remove
 }
