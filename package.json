@@ -4,13 +4,16 @@
   "description": "Solid architecture for Node.js with Express.js implementing Clean Architecture. Node.js.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "cerciber",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "module-alias": "^2.2.3"
+    "module-alias": "^2.2.3",
+    "nodemon": "^2.0.22"
   },
   "_moduleAliases": {
     "@src": "./src"
