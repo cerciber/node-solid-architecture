@@ -1,10 +1,10 @@
-# Frameworks & Drivers
-This layer contains the frameworks and external tools used in the application.
-- web: Components related to the web interface of the application.
-- devices: Components related to specific devices such as mobile devices, sensors, specialized hardware or other devices.
-- DB: Components that are used to interact with the application's data storage or persistence layer.
-- UI: Components related to user interaction.
-- external: External interfaces or services that the application needs to use.
+# node-solid-architecture
+Solid architecture for Node.js implementing Clean Architecture. Node.js.
+- frameworks: This layer contains the frameworks, drivers and external tools used in the application.
+- adapters: This layer receive requests from framework layer and translate them into calls to the corresponding application use cases.
+- application: This layer contains the use cases o the business logic workflows.
+- entities: This layer contains the conceptual representations objects of the domain and its business logic.
+- utils: Store files and utility functions that do not belong to a specific layer of the architecture.
 
 # GitHub Management Flow
 1. Create issue
