@@ -6,13 +6,23 @@ const usersRoute = require('./usersRoute/usersRoute')
 // Instance router
 const router = express.Router()
 
+// Default request
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+router.get('/', (req, res) => {
+    response.success(req, res, 200, 'Peticion a la raiz realizada correctamente.', {})
+})
+
+
 // Include subpaths
 router.use('/users', usersRoute)
-
-// Default request
-router.get('/', (req, res) => {
-    response.success(req, res, 200, 'Peticion a la raiz realizada correctamente.', list())
-})
 
 // Exports
 module.exports = router
