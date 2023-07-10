@@ -13,6 +13,7 @@ app.use(express.json()) // Format Json Data
 app.use(cors()) // Allow comunication of all origins
 
 // Use routes
+app.use(express.static('public'))
 app.use('/api-docs', swagger.serve, swagger.UISetup) // Use Swagger UI
 app.use('/', rootRoute) // Use API Routes
 

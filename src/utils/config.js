@@ -14,9 +14,9 @@ module.exports = {
                         title: 'Node clean architecture',
                         version: '1.0.0',
                         description: 'Docs of Solid architecture for Node.js implementing Clean Architecture. Node.js.'
-                      }
+                      },
                     },
-                    apis: ['./src/frameworks/web/express/routes/*.js']
+                    apis: ['./src/frameworks/web/express/routes/**/*.js']
                   }
             }
             }
