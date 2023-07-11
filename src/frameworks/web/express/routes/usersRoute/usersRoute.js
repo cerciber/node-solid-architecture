@@ -8,13 +8,15 @@ const router = express.Router()
 
 /**
  * @swagger
- * /api/users:
+ * /users:
  *   get:
- *     summary: Obtiene la lista de usuarios
- *     description: Retorna una lista de usuarios registrados.
+ *     tags:
+ *       - user
+ *     summary: Get the list of users
+ *     description: Returns a list of registered users.
  *     responses:
  *       200:
- *         description: Lista de usuarios obtenida correctamente.
+ *         description: List of users obtained successfully.
  *         content:
  *           application/json:
  *             schema:
