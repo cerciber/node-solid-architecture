@@ -11,32 +11,58 @@ const router = express.Router()
  * /users:
  *   get:
  *     tags:
- *       - user
+ *       - Users
  *     summary: Get the list of users
  *     description: Returns a list of all registered users.
  *     responses:
  *       200:
- *         description: List of users obtained successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Success'
- *               properties:
- *                 body:
- *                    $ref: '#/components/schemas/Users'
+ *         allOf:
+ *           - $ref: '#/components/responses/200'
+ *           - description: List of users obtained successfully.
+ *           - content:
+ *               application/json:
+ *                 schema:
+ *                   properties:
+ *                     body:
+ *                        $ref: '#/components/schemas/Users'
  *       500:
- *         description: An error occurred while getting the list of users.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *               properties:
- *                 message: 'An error occurred while getting the list of users.'
+ *         allOf:
+ *           - $ref: '#/components/responses/500'
  */
 router.get('/', (req, res) => {
     response.success(req, res, 200, 'Usuarios obtenidos correctamente.', list())
 })
 
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Get a user by ID
+ *     description: Retrieves a user based on the provided ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the user to retrieve.
+ *     responses:
+ *       200:
+ *         allOf:
+ *           - $ref: '#/components/responses/200'
+ *           - description: User obtained successfully.
+ *           - content:
+ *               application/json:
+ *                 schema:
+ *                   properties:
+ *                     body:
+ *                        $ref: '#/components/schemas/Users'
+ *       500:
+ *         allOf:
+ *           - $ref: '#/components/responses/500'
+ */
 router.get('/:id', (req, res) => {
     const userId = req.params.id;
     response.success(req, res, 200, 'Usuario obtenido correctamente.', get(userId))

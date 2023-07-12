@@ -27,26 +27,21 @@
       "name": "Users",
       "description": "Users rol in system.",
       "externalDocs": {
-        "description": "Find more about users",
+        "description": "Find more about Users",
+        "url": ""
+      }
+    },
+    {
+      "name": "General",
+      "description": "General requests.",
+      "externalDocs": {
+        "description": "Find more about General",
         "url": ""
       }
     }
   ],
   "components": {
     "schemas": {
-      "Users": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "1"
-          },
-          "name": {
-            "type": "string",
-            "example": "Cesar"
-          }
-        }
-      },
       "Response": {
         "type": "object",
         "properties": {
@@ -96,7 +91,7 @@
                 "example": 500
               },
               "message": {
-                "example": "System error."
+                "example": "An error occurred on server."
               },
               "error": {
                 "example": true
@@ -104,6 +99,41 @@
             }
           }
         ]
+      },
+      "Users": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "Cesar"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Successful operation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Success"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "An error occurred on server.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
       }
     }
   }
