@@ -13,14 +13,25 @@ const router = express.Router()
  *     tags:
  *       - user
  *     summary: Get the list of users
- *     description: Returns a list of registered users.
+ *     description: Returns a list of all registered users.
  *     responses:
  *       200:
  *         description: List of users obtained successfully.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Users'
+ *               $ref: '#/components/schemas/Success'
+ *               properties:
+ *                 body:
+ *                    $ref: '#/components/schemas/Users'
+ *       500:
+ *         description: An error occurred while getting the list of users.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *               properties:
+ *                 message: 'An error occurred while getting the list of users.'
  */
 router.get('/', (req, res) => {
     response.success(req, res, 200, 'Usuarios obtenidos correctamente.', list())

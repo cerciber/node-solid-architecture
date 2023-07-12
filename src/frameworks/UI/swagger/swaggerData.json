@@ -46,6 +46,64 @@
             "example": "Cesar"
           }
         }
+      },
+      "Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "boolean"
+          },
+          "body": {
+            "type": "object"
+          }
+        }
+      },
+      "Success": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response"
+          },
+          {
+            "properties": {
+              "status": {
+                "example": 200
+              },
+              "message": {
+                "example": "Successful operation."
+              },
+              "error": {
+                "example": false
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response"
+          },
+          {
+            "properties": {
+              "status": {
+                "example": 500
+              },
+              "message": {
+                "example": "System error."
+              },
+              "error": {
+                "example": true
+              }
+            }
+          }
+        ]
       }
     }
   }
