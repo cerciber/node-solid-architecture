@@ -1,0 +1,205 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Node clean architecture",
+    "description": "Solid architecture for Node.js implementing Clean Architecture. Node.js.",
+    "termsOfService": "",
+    "contact": {
+      "email": "cerciber@hotmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.1"
+  },
+  "externalDocs": {
+    "description": "Find out more about Node clean architecture",
+    "url": "https://github.com/cerciber/node-solid-architecture"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3009/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Users rol in system.",
+      "externalDocs": {
+        "description": "Find more about Users",
+        "url": ""
+      }
+    },
+    {
+      "name": "General",
+      "description": "General requests.",
+      "externalDocs": {
+        "description": "Find more about General",
+        "url": ""
+      }
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "boolean"
+          },
+          "body": {
+            "type": "object"
+          }
+        }
+      },
+      "Success": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response"
+          },
+          {
+            "properties": {
+              "status": {
+                "example": 200
+              },
+              "message": {
+                "example": "Successful operation."
+              },
+              "error": {
+                "example": false
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response"
+          },
+          {
+            "properties": {
+              "status": {
+                "example": 500
+              },
+              "message": {
+                "example": "An error occurred on server."
+              },
+              "error": {
+                "example": true
+              }
+            }
+          }
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "Cesar"
+          }
+        }
+      },
+      "Users": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Successful operation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Success"
+                },
+                {
+                  "properties": {}
+                }
+              ]
+            }
+          }
+        }
+      },
+      "201": {
+        "description": "Successful operation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Success"
+                },
+                {
+                  "properties": {
+                    "status": {
+                      "example": 201
+                    },
+                    "message": {
+                      "example": "Successful operation with insertion."
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Requested data does not exist.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Error"
+                },
+                {
+                  "properties": {
+                    "status": {
+                      "example": 404
+                    },
+                    "message": {
+                      "example": "Requested data does not exist."
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "An error occurred on server.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Error"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
