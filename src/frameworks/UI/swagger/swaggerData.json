@@ -100,7 +100,7 @@
           }
         ]
       },
-      "Users": {
+      "User": {
         "type": "object",
         "properties": {
           "id": {
@@ -112,6 +112,12 @@
             "example": "Cesar"
           }
         }
+      },
+      "Users": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
       }
     },
     "responses": {
@@ -120,7 +126,62 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Success"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Success"
+                },
+                {
+                  "properties": {}
+                }
+              ]
+            }
+          }
+        }
+      },
+      "201": {
+        "description": "Successful operation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Success"
+                },
+                {
+                  "properties": {
+                    "status": {
+                      "example": 201
+                    },
+                    "message": {
+                      "example": "Successful operation with insertion."
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Requested data does not exist.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Error"
+                },
+                {
+                  "properties": {
+                    "status": {
+                      "example": 404
+                    },
+                    "message": {
+                      "example": "Requested data does not exist."
+                    }
+                  }
+                }
+              ]
             }
           }
         }
@@ -130,7 +191,11 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Error"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Error"
+                }
+              ]
             }
           }
         }

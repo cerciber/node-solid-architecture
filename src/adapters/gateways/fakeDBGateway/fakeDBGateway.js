@@ -35,21 +35,21 @@ function update(tableName, id, newData) {
       const index = table.findIndex((item) => item.id === id);
       if (index !== -1) {
         table[index] = { ...table[index], ...newData };
-        return true;
+        return table[index];
       }
     }
-    return false;
 }
   
 // Remove by id
 function remove(tableName, id) {
     const table = database[tableName];
     if (table) {
-      const initialLength = table.length;
-      database[tableName] = table.filter((item) => item.id !== id);
-      return database[tableName].length !== initialLength;
+      const index = table.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        database[tableName] = table.filter((item) => item.id !== id);
+        return table[index];
+      }
     }
-    return false;
 }
 
 // Exports
