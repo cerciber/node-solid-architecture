@@ -38,6 +38,7 @@ function update(tableName, id, newData) {
       return table[index];
     }
   }
+  return undefined;
 }
 
 // Remove by id
@@ -50,6 +51,7 @@ function remove(tableName, id) {
       return table[index];
     }
   }
+  return undefined;
 }
 
 // Exports

@@ -1,7 +1,6 @@
 // Imports
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
-const config = require('@src/utils/config');
 const swaggerData = require('./swaggerData.json');
 
 // Set Swagger config
