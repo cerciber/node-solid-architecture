@@ -1,10 +1,10 @@
 // Imports
-const express = require('express')
-const response = require('@src/frameworks/web/express/response')
-const usersRoute = require('./usersRoute/usersRoute')
+const express = require('express');
+const response = require('@src/frameworks/web/express/response');
+const usersRoute = require('./usersRoute/usersRoute');
 
 // Instance router
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @swagger
@@ -22,19 +22,18 @@ const router = express.Router()
  *              application/json:
  *                schema:
  *                  properties:
- *                    message: 
+ *                    message:
  *                      example: System is running.
  *       500:
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
 router.get('/', (req, res) => {
-    response.success(req, res, 200, 'System is running.', {})
-})
-
+  response.success(req, res, 200, 'System is running.', {});
+});
 
 // Include subpaths
-router.use('/users', usersRoute)
+router.use('/users', usersRoute);
 
 // Exports
-module.exports = router
+module.exports = router;

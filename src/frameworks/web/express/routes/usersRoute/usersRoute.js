@@ -1,10 +1,16 @@
 // Imports
-const express = require('express')
-const response = require('@src/frameworks/web/express/response')
-const { list, get, add, update, remove } = require('@src/adapters/controllers/userController')
+const express = require('express');
+const response = require('@src/frameworks/web/express/response');
+const {
+  list,
+  get,
+  add,
+  update,
+  remove,
+} = require('@src/adapters/controllers/userController');
 
 // Instance router
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @swagger
@@ -30,8 +36,8 @@ const router = express.Router()
  *           - $ref: '#/components/responses/500'
  */
 router.get('/', (req, res) => {
-    response.success(req, res, 200, 'Users retrieved successfully.', list())
-})
+  response.success(req, res, 200, 'Users retrieved successfully.', list());
+});
 
 /**
  * @swagger
@@ -64,9 +70,9 @@ router.get('/', (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.get('/:id', (req, res) => {
-    const userId = req.params.id;
-    response.success(req, res, 200, 'User obtained successfully.', get(userId))
-})
+  const userId = req.params.id;
+  response.success(req, res, 200, 'User obtained successfully.', get(userId));
+});
 
 /**
  * @swagger
@@ -98,9 +104,9 @@ router.get('/:id', (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.post('/', (req, res) => {
-    const newUser = req.body;
-    response.success(req, res, 201, 'User created successfully.', add(newUser))
-})
+  const newUser = req.body;
+  response.success(req, res, 201, 'User created successfully.', add(newUser));
+});
 
 /**
  * @swagger
@@ -142,14 +148,14 @@ router.post('/', (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.put('/:id', (req, res) => {
-    const userId = req.params.id;
-    const updatedUser = req.body;
-    const result = update(userId, updatedUser)
-    if (result) {
-        response.success(req, res, 200, 'User updated successfully.', result)
-    } else {
-        response.error(req, res, 404, 'User does not exist.', {})
-    }
+  const userId = req.params.id;
+  const updatedUser = req.body;
+  const result = update(userId, updatedUser);
+  if (result) {
+    response.success(req, res, 200, 'User updated successfully.', result);
+  } else {
+    response.error(req, res, 404, 'User does not exist.', {});
+  }
 });
 
 /**
@@ -186,15 +192,14 @@ router.put('/:id', (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.delete('/:id', (req, res) => {
-    const userId = req.params.id;
-    const result = remove(userId)
-    if (result) {
-        response.success(req, res, 200, 'User deleted successfully.', result)
-    } else {
-        response.error(req, res, 404, 'User does not exist.', {})
-    }
+  const userId = req.params.id;
+  const result = remove(userId);
+  if (result) {
+    response.success(req, res, 200, 'User deleted successfully.', result);
+  } else {
+    response.error(req, res, 404, 'User does not exist.', {});
+  }
 });
 
-
 // Exports
-module.exports = router
+module.exports = router;
