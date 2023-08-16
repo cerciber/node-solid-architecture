@@ -1,5 +1,8 @@
+// Imports
+const _ = require('lodash');
+
 // Exports
-module.exports = {
+module.exports = _.cloneDeep({
   Response: {
     type: 'object',
     properties: {
@@ -23,4 +26,4 @@ module.exports = {
     },
     required: ['status', 'message', 'error', 'body'],
   },
-};
+});

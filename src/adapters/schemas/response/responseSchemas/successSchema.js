@@ -1,4 +1,5 @@
 // Imports
+const _ = require('lodash');
 const responseSchema = require('../responseSchema');
 
 // Customizations
@@ -8,6 +9,6 @@ properties.message.example = 'Successful operation.';
 properties.error.example = false;
 
 // Exports
-module.exports = {
+module.exports = _.cloneDeep({
   Success: responseSchema.Response,
-};
+});

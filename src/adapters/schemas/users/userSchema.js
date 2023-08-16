@@ -1,16 +1,21 @@
+// Imports
+const _ = require('lodash');
+
 // Exports
-module.exports = {
+module.exports = _.cloneDeep({
   User: {
     type: 'object',
     properties: {
       id: {
         type: 'string',
-        example: '1',
       },
       name: {
         type: 'string',
-        example: 'Cesar',
       },
     },
+    example: {
+      id: '1',
+      name: 'Cesar',
+    },
   },
-};
+});

@@ -1,4 +1,5 @@
 // Imports
+const _ = require('lodash');
 const successSchema = require('../successSchema');
 const httpResponseSchema = require('../httpResponseSchema');
 
@@ -10,6 +11,6 @@ httpResponseSchema.description = properties.message.example;
 httpResponseSchema.content['application/json'].schema = successSchema.Success;
 
 // Exports
-module.exports = {
+module.exports = _.cloneDeep({
   [properties.status.example]: httpResponseSchema,
-};
+});

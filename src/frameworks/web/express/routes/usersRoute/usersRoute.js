@@ -30,7 +30,7 @@ const router = express.Router();
  *                 schema:
  *                   properties:
  *                     body:
- *                        $ref: '#/components/schemas/Users'
+ *                       $ref: '#/components/schemas/Users'
  *       500:
  *         allOf:
  *           - $ref: '#/components/responses/500'
@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
  *                 schema:
  *                   properties:
  *                     body:
- *                        $ref: '#/components/schemas/User'
+ *                       $ref: '#/components/schemas/User'
  *       500:
  *         allOf:
  *           - $ref: '#/components/responses/500'
