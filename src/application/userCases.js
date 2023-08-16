@@ -5,35 +5,35 @@ const gateway = require('@src/adapters/gateways/fakeDBGateway/fakeDBGateway');
 const TABLE = 'users';
 
 // List data
-function list() {
-  return gateway.list(TABLE);
+async function getUserslistCase() {
+  return gateway.getAll(TABLE);
 }
 
 // Get by id
-function get(id) {
+async function getUserByIdCase(id) {
   return gateway.get(TABLE, id);
 }
 
 // Add
-function add(newData) {
+async function addUserCase(newData) {
   return gateway.add(TABLE, newData);
 }
 
 // Update by id
-function update(id, newData) {
+async function updateUserCase(id, newData) {
   return gateway.update(TABLE, id, newData);
 }
 
 // Remove by id
-function remove(id) {
+async function removeUserCase(id) {
   return gateway.remove(TABLE, id);
 }
 
 // Exports
 module.exports = {
-  list,
-  get,
-  add,
-  update,
-  remove,
+  getUserslistCase,
+  getUserByIdCase,
+  addUserCase,
+  updateUserCase,
+  removeUserCase,
 };

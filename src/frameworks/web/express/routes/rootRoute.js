@@ -28,8 +28,8 @@ const router = express.Router();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get('/', (req, res) => {
-  response.success(req, res, 200, 'System is running.', {});
+router.get('/', async (req, res) => {
+  await response.success(req, res, 200, 'System is running.', {});
 });
 
 // Include subpaths

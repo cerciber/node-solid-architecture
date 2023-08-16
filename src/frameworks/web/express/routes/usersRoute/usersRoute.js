@@ -2,12 +2,12 @@
 const express = require('express');
 const response = require('@src/frameworks/web/express/response');
 const {
-  list,
-  get,
-  add,
-  update,
-  remove,
-} = require('@src/adapters/controllers/userController');
+  getUserslistController,
+  getUserByIdController,
+  addUserController,
+  updateUserController,
+  removeUserController,
+} = require('@src/adapters/controllers/user/userController');
 
 // Instance router
 const router = express.Router();
@@ -35,8 +35,14 @@ const router = express.Router();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get('/', (req, res) => {
-  response.success(req, res, 200, 'Users retrieved successfully.', list());
+router.get('/', async (req, res) => {
+  return response.success(
+    req,
+    res,
+    200,
+    'Users retrieved successfully.',
+    await getUserslistController()
+  );
 });
 
 /**
@@ -69,9 +75,15 @@ router.get('/', (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const userId = req.params.id;
-  response.success(req, res, 200, 'User obtained successfully.', get(userId));
+  return response.success(
+    req,
+    res,
+    200,
+    'User obtained successfully.',
+    await getUserByIdController(userId)
+  );
 });
 
 /**
@@ -103,9 +115,15 @@ router.get('/:id', (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const newUser = req.body;
-  response.success(req, res, 201, 'User created successfully.', add(newUser));
+  return response.success(
+    req,
+    res,
+    201,
+    'User created successfully.',
+    await addUserController(newUser)
+  );
 });
 
 /**
@@ -147,15 +165,20 @@ router.post('/', (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   const userId = req.params.id;
   const updatedUser = req.body;
-  const result = update(userId, updatedUser);
+  const result = await updateUserController(userId, updatedUser);
   if (result) {
-    response.success(req, res, 200, 'User updated successfully.', result);
-  } else {
-    response.error(req, res, 404, 'User does not exist.', {});
+    return response.success(
+      req,
+      res,
+      200,
+      'User updated successfully.',
+      result
+    );
   }
+  return response.error(req, res, 404, 'User does not exist.', {});
 });
 
 /**
@@ -191,14 +214,19 @@ router.put('/:id', (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const userId = req.params.id;
-  const result = remove(userId);
+  const result = await removeUserController(userId);
   if (result) {
-    response.success(req, res, 200, 'User deleted successfully.', result);
-  } else {
-    response.error(req, res, 404, 'User does not exist.', {});
+    return response.success(
+      req,
+      res,
+      200,
+      'User deleted successfully.',
+      result
+    );
   }
+  return response.error(req, res, 404, 'User does not exist.', {});
 });
 
 // Exports

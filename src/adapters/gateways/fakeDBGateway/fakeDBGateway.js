@@ -3,12 +3,12 @@ const { v4: uuidv4 } = require('uuid');
 const { database } = require('@src/frameworks/DB/fakeDB/fakeDB');
 
 // List data
-function list(tableName) {
+async function getAll(tableName) {
   return database[tableName] || [];
 }
 
 // Get by id
-function get(tableName, id) {
+async function get(tableName, id) {
   const table = database[tableName];
   if (table) {
     return table.find((item) => item.id === id);
@@ -17,7 +17,7 @@ function get(tableName, id) {
 }
 
 // Add
-function add(tableName, newItem) {
+async function add(tableName, newItem) {
   const table = database[tableName];
   if (table) {
     const newId = uuidv4();
@@ -29,7 +29,7 @@ function add(tableName, newItem) {
 }
 
 // Update by id
-function update(tableName, id, newData) {
+async function update(tableName, id, newData) {
   const table = database[tableName];
   if (table) {
     const index = table.findIndex((item) => item.id === id);
@@ -42,7 +42,7 @@ function update(tableName, id, newData) {
 }
 
 // Remove by id
-function remove(tableName, id) {
+async function remove(tableName, id) {
   const table = database[tableName];
   if (table) {
     const index = table.findIndex((item) => item.id === id);
@@ -56,7 +56,7 @@ function remove(tableName, id) {
 
 // Exports
 module.exports = {
-  list,
+  getAll,
   get,
   add,
   update,

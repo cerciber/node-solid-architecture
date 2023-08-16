@@ -1,4 +1,4 @@
-exports.success = (req, res, status, message, body) => {
+exports.success = async (req, res, status, message, body) => {
   res.status(status).send({
     status,
     message,
@@ -7,7 +7,7 @@ exports.success = (req, res, status, message, body) => {
   });
 };
 
-exports.error = (req, res, status, message, body) => {
+exports.error = async (req, res, status, message, body) => {
   res.status(status).send({
     status,
     message,
