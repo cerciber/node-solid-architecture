@@ -1,6 +1,6 @@
 // Imports
 const express = require('express');
-const response = require('@src/frameworks/web/express/response');
+const response = require('@response');
 const {
   getUserslistController,
   getUserByIdController,

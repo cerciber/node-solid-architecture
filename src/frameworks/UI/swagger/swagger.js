@@ -29,8 +29,6 @@ swaggerData.components.responses = {
   ...response500Schema,
 };
 
-console.dir(swaggerData, { depth: null });
-
 // Set Swagger config
 const swaggerDocs = swaggerJsdoc({
   swaggerDefinition: swaggerData,

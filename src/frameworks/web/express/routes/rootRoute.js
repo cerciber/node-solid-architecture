@@ -1,6 +1,6 @@
 // Imports
 const express = require('express');
-const response = require('@src/frameworks/web/express/response');
+const response = require('@response');
 const usersRoute = require('./usersRoute/usersRoute');
 
 // Instance router
@@ -29,7 +29,7 @@ const router = express.Router();
  *           - $ref: '#/components/responses/500'
  */
 router.get('/', async (req, res) => {
-  await response.success(req, res, 200, 'System is running.', {});
+  return response.success(req, res, 200, 'System is running.', {});
 });
 
 // Include subpaths
