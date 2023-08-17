@@ -15,7 +15,16 @@ module.exports = {
   settings: {
     'import/resolver': {
       alias: {
-        map: [['@src', path.resolve(__dirname, './src')]],
+        map: [
+          ['@src', path.resolve(__dirname, './src')],
+          [
+            '@response',
+            path.resolve(
+              __dirname,
+              './src/frameworks/web/express/responses/response.js'
+            ),
+          ],
+        ],
         extensions: ['.js'],
       },
     },
