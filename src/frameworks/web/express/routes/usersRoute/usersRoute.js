@@ -1,6 +1,6 @@
 // Imports
 const express = require('express');
-const response = require('@response');
+const sendResponse = require('@express/sendResponse');
 const {
   getUserslistController,
   getUserByIdController,
@@ -36,13 +36,7 @@ const router = express.Router();
  *           - $ref: '#/components/responses/500'
  */
 router.get('/', async (req, res) => {
-  return response.success(
-    req,
-    res,
-    200,
-    'Users retrieved successfully.',
-    await getUserslistController()
-  );
+  return sendResponse(req, res, await getUserslistController());
 });
 
 /**
@@ -77,13 +71,7 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
   const userId = req.params.id;
-  return response.success(
-    req,
-    res,
-    200,
-    'User obtained successfully.',
-    await getUserByIdController(userId)
-  );
+  return sendResponse(req, res, await getUserByIdController(userId));
 });
 
 /**
@@ -117,13 +105,7 @@ router.get('/:id', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   const newUser = req.body;
-  return response.success(
-    req,
-    res,
-    201,
-    'User created successfully.',
-    await addUserController(newUser)
-  );
+  return sendResponse(req, res, await addUserController(newUser));
 });
 
 /**
@@ -168,17 +150,11 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const userId = req.params.id;
   const updatedUser = req.body;
-  const result = await updateUserController(userId, updatedUser);
-  if (result) {
-    return response.success(
-      req,
-      res,
-      200,
-      'User updated successfully.',
-      result
-    );
-  }
-  return response.error(req, res, 404, 'User does not exist.', {});
+  return sendResponse(
+    req,
+    res,
+    await updateUserController(userId, updatedUser)
+  );
 });
 
 /**
@@ -216,17 +192,7 @@ router.put('/:id', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
   const userId = req.params.id;
-  const result = await removeUserController(userId);
-  if (result) {
-    return response.success(
-      req,
-      res,
-      200,
-      'User deleted successfully.',
-      result
-    );
-  }
-  return response.error(req, res, 404, 'User does not exist.', {});
+  return sendResponse(req, res, await await removeUserController(userId));
 });
 
 // Exports

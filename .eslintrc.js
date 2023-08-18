@@ -21,9 +21,10 @@ module.exports = {
             '@response',
             path.resolve(
               __dirname,
-              './src/frameworks/web/express/responses/response.js'
+              './src/adapters/presenters/sendResponse.js'
             ),
           ],
+          ['@express', path.resolve(__dirname, './src/frameworks/web/express')],
         ],
         extensions: ['.js'],
       },

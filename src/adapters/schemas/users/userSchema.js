@@ -17,5 +17,6 @@ module.exports = _.cloneDeep({
       id: '1',
       name: 'Cesar',
     },
+    required: ['id', 'name'],
   },
 });

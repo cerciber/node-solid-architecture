@@ -1,12 +1,12 @@
 // Imports
 const _ = require('lodash');
 const {
-  getSchemaExample2,
+  getSchemaExampleFromExamples,
 } = require('@src/adapters/controllers/schemas/schemaController');
 const userSchema = require('./userSchema');
 
 // Extract example
-const exampleItem = getSchemaExample2(userSchema);
+const exampleItem = getSchemaExampleFromExamples(userSchema);
 
 // Exports
 module.exports = _.cloneDeep({

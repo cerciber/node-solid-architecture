@@ -1,12 +1,14 @@
 // Imports
 const gateway = require('@src/adapters/gateways/fakeDBGateway/fakeDBGateway');
+const response = require('@response');
 
 // Define table users
 const TABLE = 'users';
 
 // List data
 async function getUserslistCase() {
-  return gateway.getAll(TABLE);
+  const users = await gateway.getAll(TABLE);
+  return response.success(200, 'Users retrieved successfully.', users);
 }
 
 // Get by id

@@ -1,4 +1,5 @@
 // Imports
+const response = require('@response');
 const {
   getUserslistCase,
   getUserByIdCase,
@@ -6,6 +7,9 @@ const {
   updateUserCase,
   removeUserCase,
 } = require('@src/application/userCases');
+const {
+  validateSchema,
+} = require('@src/adapters/controllers/schemas/schemaController');
 
 // List data
 async function getUserslistController() {
@@ -14,7 +18,12 @@ async function getUserslistController() {
 
 // Get by id
 async function getUserByIdController(id) {
-  return getUserByIdCase(id);
+  const user = await getUserByIdCase(id);
+  const userValidation = validateSchema('User', user);
+  if (userValidation.valid) {
+    return user;
+  }
+  return response.error(200, 'User not have correct structure.', {});
 }
 
 // Add

@@ -1,6 +1,7 @@
 // Imports
 const express = require('express');
 const response = require('@response');
+const sendResponse = require('@express/sendResponse');
 const usersRoute = require('./usersRoute/usersRoute');
 
 // Instance router
@@ -29,7 +30,11 @@ const router = express.Router();
  *           - $ref: '#/components/responses/500'
  */
 router.get('/', async (req, res) => {
-  return response.success(req, res, 200, 'System is running.', {});
+  return sendResponse(
+    req,
+    res,
+    response.success(200, 'System is running.', {})
+  );
 });
 
 // Include subpaths
