@@ -192,7 +192,7 @@ router.put('/:id', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
   const userId = req.params.id;
-  return sendResponse(req, res, await await removeUserController(userId));
+  return sendResponse(req, res, await removeUserController(userId));
 });
 
 // Exports
