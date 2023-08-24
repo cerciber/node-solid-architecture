@@ -27,16 +27,40 @@ function getSchemaExampleFromExamples(schema) {
 }
 
 function validateSchema(name, schema) {
-  const errors = validator.validate(
+  const result = validator.validate(
     schema,
     swaggerData.components.schemas[name],
     true
   );
-  return { valid: errors.valid, errors: errors.errors };
+  return {
+    valid: result.valid,
+    errors:
+      result.errors?.map((error) => ({
+        message: error.message,
+        stack: error.stack,
+      })) || [],
+  };
+}
+
+function validateResponse(name, schema) {
+  const result = validator.validate(
+    schema,
+    swaggerData.components.responses[name],
+    true
+  );
+  return {
+    valid: result.valid,
+    errors:
+      result.errors?.map((error) => ({
+        message: error.message,
+        stack: error.stack,
+      })) || [],
+  };
 }
 
 module.exports = {
   getSchemaExampleFromFileds,
   getSchemaExampleFromExamples,
   validateSchema,
+  validateResponse,
 };

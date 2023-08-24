@@ -13,7 +13,13 @@ async function getUserslistCase() {
 
 // Get by id
 async function getUserByIdCase(id) {
-  return gateway.get(TABLE, id);
+  const user = await gateway.get(TABLE, id);
+  if (user) {
+    return response.success(200, 'User retrieved successfully.', {
+      user,
+    });
+  }
+  return response.success(404, 'User no exist.', {});
 }
 
 // Add

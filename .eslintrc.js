@@ -19,10 +19,7 @@ module.exports = {
           ['@src', path.resolve(__dirname, './src')],
           [
             '@response',
-            path.resolve(
-              __dirname,
-              './src/adapters/presenters/sendResponse.js'
-            ),
+            path.resolve(__dirname, './src/adapters/presenters/response.js'),
           ],
           ['@express', path.resolve(__dirname, './src/frameworks/web/express')],
         ],
