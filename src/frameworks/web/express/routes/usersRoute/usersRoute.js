@@ -70,8 +70,7 @@ router.get('/', async (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.get('/:id', async (req, res) => {
-  const userId = req.params.id;
-  return sendResponse(req, res, await getUserByIdController(userId));
+  return sendResponse(req, res, await getUserByIdController(req.params));
 });
 
 /**

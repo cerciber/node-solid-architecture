@@ -8,7 +8,7 @@ const TABLE = 'users';
 // List data
 async function getUserslistCase() {
   const users = await gateway.getAll(TABLE);
-  return response.success(200, 'Users retrieved successfully.', users);
+  return response.success(200, 'Users retrieved successfully.', { users });
 }
 
 // Get by id
