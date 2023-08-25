@@ -1,10 +1,14 @@
 /* eslint-disable global-require */
+// Imports
+const swaggerJsdoc = require('swagger-jsdoc');
+
 // Get Swagger Data
 function getSwaggerData() {
   // Http response schemas imports
   const response200Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/200Schema');
   const response201Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/201Schema');
   const response404Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/404Schema');
+  const response409Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/409Schema');
   const response500Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/500Schema');
 
   // Data schemas imports
@@ -25,10 +29,16 @@ function getSwaggerData() {
     ...response200Schema,
     ...response201Schema,
     ...response404Schema,
+    ...response409Schema,
     ...response500Schema,
   };
 
-  return swaggerData;
+  // Set Swagger config
+  const swaggerDocs = swaggerJsdoc({
+    swaggerDefinition: swaggerData,
+    apis: ['./src/frameworks/web/express/routes/**/*.js'],
+  });
+  return swaggerDocs;
 }
 
 // Exports

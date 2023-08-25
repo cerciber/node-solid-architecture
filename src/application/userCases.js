@@ -24,7 +24,17 @@ async function getUserByIdCase(id) {
 
 // Add
 async function addUserCase(newData) {
-  return gateway.add(TABLE, newData);
+  const user = await gateway.get(TABLE, newData.id);
+  if (user) {
+    return response.success(409, 'User already exist.', {
+      user,
+    });
+  }
+  const userAdded = await gateway.add(TABLE, newData);
+  console.log(userAdded);
+  return response.success(200, 'User added successfully.', {
+    user: userAdded,
+  });
 }
 
 // Update by id

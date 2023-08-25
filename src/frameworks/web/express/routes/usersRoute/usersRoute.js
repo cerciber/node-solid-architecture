@@ -103,8 +103,7 @@ router.get('/:id', async (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.post('/', async (req, res) => {
-  const newUser = req.body;
-  return sendResponse(req, res, await addUserController(newUser));
+  return sendResponse(req, res, await addUserController(req.body));
 });
 
 /**

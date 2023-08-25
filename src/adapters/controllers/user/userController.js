@@ -11,6 +11,13 @@ const {
   validate,
   validateByStatus,
 } = require('@src/adapters/controllers/validation/validationController');
+const {
+  validateNonEmptyString,
+  validateResponse,
+  validateType,
+  validateSchema,
+  validateObjectKeys,
+} = require('@src/adapters/controllers/validation/validationFunctions');
 
 // List data
 async function getUserslistController() {
@@ -20,17 +27,21 @@ async function getUserslistController() {
   // Validate output
   const outputValidation = validateByStatus(usersResponse.status, {
     200: [
-      ['validateResponse', [200, usersResponse]],
-      ['validateType', ['object', usersResponse.body]],
-      ['validateSchema', ['Users', usersResponse.body.users]],
+      [
+        validateResponse,
+        [200, usersResponse, { users: 'Users' }],
+        `Response not have correct structure.`,
+      ],
     ],
   });
 
   // Return incorrect validation output
   if (!outputValidation.valid) {
-    return response.error(400, outputValidation.badMessage, {
-      errors: outputValidation.errors,
-    });
+    return response.error(
+      400,
+      outputValidation.badMessage,
+      outputValidation.details
+    );
   }
 
   // Return correct validation output
@@ -44,15 +55,17 @@ async function getUserByIdController(params) {
 
   // Validate input
   const inputValidation = validate([
-    ['validateType', ['string', id]],
-    ['validateNonEmptyString', [id]],
+    [validateType, ['string', id], 'Param id not is an string type.'],
+    [validateNonEmptyString, [id], 'Param id is an empty string value.'],
   ]);
 
   // Return incorrect validation input
   if (!inputValidation.valid) {
-    return response.error(400, inputValidation.badMessage, {
-      errors: inputValidation.errors,
-    });
+    return response.error(
+      400,
+      inputValidation.badMessage,
+      inputValidation.details
+    );
   }
 
   // Apply bussiness logic
@@ -61,22 +74,28 @@ async function getUserByIdController(params) {
   // Validate output
   const outputValidation = validateByStatus(userResponse.status, {
     200: [
-      ['validateResponse', [200, userResponse]],
-      ['validateType', ['object', userResponse.body]],
-      ['validateSchema', ['User', userResponse.body.user]],
+      [
+        validateResponse,
+        [200, userResponse, { user: 'User' }],
+        `Response not have correct structure.`,
+      ],
     ],
     404: [
-      ['validateResponse', [404, userResponse]],
-      ['validateType', ['object', userResponse.body]],
-      ['validateEmptyObject', [userResponse.body]],
+      [
+        validateResponse,
+        [404, userResponse, {}],
+        `Response not have correct structure.`,
+      ],
     ],
   });
 
   // Return incorrect validation output
   if (!outputValidation.valid) {
-    return response.error(400, outputValidation.badMessage, {
-      errors: outputValidation.errors,
-    });
+    return response.error(
+      400,
+      outputValidation.badMessage,
+      outputValidation.details
+    );
   }
 
   // Return correct validation output
@@ -84,8 +103,61 @@ async function getUserByIdController(params) {
 }
 
 // Add
-async function addUserController(newData) {
-  return addUserCase(newData);
+async function addUserController(body) {
+  // Get input
+  const { user } = body;
+
+  // Validate input
+  const inputValidation = validate([
+    [
+      validateObjectKeys,
+      [body, ['user']],
+      'Body is not an key object type with specific keys.',
+    ],
+    [validateSchema, ['User', user], 'User schema not have correct structure.'],
+  ]);
+
+  // Return incorrect validation input
+  if (!inputValidation.valid) {
+    return response.error(
+      400,
+      inputValidation.badMessage,
+      inputValidation.details
+    );
+  }
+
+  // Apply bussiness logic
+  const addUserResponse = await addUserCase(user);
+
+  // Validate output
+  const outputValidation = validateByStatus(addUserResponse.status, {
+    200: [
+      [
+        validateResponse,
+        [200, addUserResponse, { user: 'User' }],
+        `Response not have correct structure.`,
+      ],
+    ],
+    409: [
+      [
+        validateResponse,
+        [409, addUserResponse, { user: 'User' }],
+        `Response not have correct structure.`,
+      ],
+    ],
+  });
+
+  // Return incorrect validation output
+  if (!outputValidation.valid) {
+    return response.error(
+      400,
+      outputValidation.badMessage,
+      outputValidation.details
+    );
+  }
+
+  // Return correct validation output
+  return addUserResponse;
 }
 
 // Update by id
