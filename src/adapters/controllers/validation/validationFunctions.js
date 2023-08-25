@@ -172,6 +172,82 @@ function validateNonEmptyString(value) {
   }
 }
 
+function validateNonArrayObject(value) {
+  try {
+    if (
+      !(typeof value === 'object' && value !== null && !Array.isArray(value))
+    ) {
+      throw new Error(
+        `Expected an keys object, but received a ${JSON.stringify(value)}`
+      );
+    }
+    return {
+      valid: true,
+      errors: [],
+      expected: 'A keys object',
+      obtained: value,
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [
+        {
+          message: error.message,
+          stack: error.stack,
+        },
+      ],
+      expected: 'A keys object',
+      obtained: value,
+    };
+  }
+}
+
+// Validate object with specific keys
+function validateObjectKeys(value, expectedKeys) {
+  try {
+    if (
+      !(typeof value === 'object' && value !== null && !Array.isArray(value))
+    ) {
+      throw new Error(
+        `Expected an key object, but received a ${JSON.stringify(value)}`
+      );
+    }
+
+    const receivedKeys = Object.keys(value);
+    const missingKeys = expectedKeys.filter(
+      (key) => !receivedKeys.includes(key)
+    );
+    const extraKeys = receivedKeys.filter((key) => !expectedKeys.includes(key));
+
+    if (missingKeys.length > 0 || extraKeys.length > 0) {
+      throw new Error(
+        `Expected object keys: ${expectedKeys.join(
+          ', '
+        )}. Received keys: ${receivedKeys.join(', ')}`
+      );
+    }
+
+    return {
+      valid: true,
+      errors: [],
+      expected: `An object with keys: ${expectedKeys.join(', ')}`,
+      obtained: value,
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [
+        {
+          message: error.message,
+          stack: error.stack,
+        },
+      ],
+      expected: `An object with keys: ${expectedKeys.join(', ')}`,
+      obtained: value,
+    };
+  }
+}
+
 // Exports
 module.exports = {
   validateSchema,
@@ -179,4 +255,6 @@ module.exports = {
   validateType,
   validateEmptyObject,
   validateNonEmptyString,
+  validateNonArrayObject,
+  validateObjectKeys,
 };

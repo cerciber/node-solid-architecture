@@ -15,6 +15,8 @@ const {
   validateNonEmptyString,
   validateResponse,
   validateType,
+  validateSchema,
+  validateObjectKeys,
 } = require('@src/adapters/controllers/validation/validationFunctions');
 
 // List data
@@ -101,8 +103,61 @@ async function getUserByIdController(params) {
 }
 
 // Add
-async function addUserController(newData) {
-  return addUserCase(newData);
+async function addUserController(body) {
+  // Get input
+  const { user } = body;
+
+  // Validate input
+  const inputValidation = validate([
+    [
+      validateObjectKeys,
+      [body, ['user']],
+      'Body is not an key object type with specific keys.',
+    ],
+    [validateSchema, ['User', user], 'User schema not have correct structure.'],
+  ]);
+
+  // Return incorrect validation input
+  if (!inputValidation.valid) {
+    return response.error(
+      400,
+      inputValidation.badMessage,
+      inputValidation.details
+    );
+  }
+
+  // Apply bussiness logic
+  const addUserResponse = await addUserCase(user);
+
+  // Validate output
+  const outputValidation = validateByStatus(addUserResponse.status, {
+    200: [
+      [
+        validateResponse,
+        [200, addUserResponse, { user: 'User' }],
+        `Response not have correct structure.`,
+      ],
+    ],
+    409: [
+      [
+        validateResponse,
+        [409, addUserResponse, { user: 'User' }],
+        `Response not have correct structure.`,
+      ],
+    ],
+  });
+
+  // Return incorrect validation output
+  if (!outputValidation.valid) {
+    return response.error(
+      400,
+      outputValidation.badMessage,
+      outputValidation.details
+    );
+  }
+
+  // Return correct validation output
+  return addUserResponse;
 }
 
 // Update by id
