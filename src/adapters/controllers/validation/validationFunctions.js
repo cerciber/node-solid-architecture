@@ -1,0 +1,182 @@
+// Imports
+const Validator = require('swagger-model-validator');
+const _ = require('lodash');
+const getSwaggerData = require('@src/frameworks/UI/swagger/getSwaggerData');
+
+// Instance swagger validator
+const swaggerData = getSwaggerData();
+const validator = new Validator(swaggerData);
+
+// Validate empty object
+function validateEmptyObject(value) {
+  try {
+    if (!(typeof value === 'object' && Object.keys(value).length === 0)) {
+      throw new Error(
+        `Expected a empty object, but received a ${JSON.stringify(value)}`
+      );
+    }
+    return {
+      valid: true,
+      errors: [],
+      expected: {},
+      obtained: JSON.stringify(value),
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [
+        {
+          message: error.message,
+          stack: error.stack,
+        },
+      ],
+      expected: {},
+      obtained: JSON.stringify(value),
+    };
+  }
+}
+
+// Validate swwagger schema
+function validateSchema(name, schema) {
+  const result = validator.validate(
+    schema,
+    swaggerData.components.schemas[name],
+    true,
+    false,
+    true
+  );
+  return {
+    valid: result.valid,
+    errors:
+      result.errors?.map((error) => ({
+        message: error.message,
+        stack: error.stack,
+      })) || [],
+    expected: swaggerData.components.schemas[name],
+    obtained: schema,
+  };
+}
+
+// Validate response swwagger schema
+function validateResponse(code, schema, body) {
+  const responseSchema = _.cloneDeep(
+    swaggerData.components.responses[code].content['application/json'].schema
+  );
+  if (body) {
+    Object.entries(body).forEach(([key, value]) => {
+      if (!responseSchema.properties.body.properties) {
+        responseSchema.properties.body.properties = {};
+      }
+      responseSchema.properties.body.properties[key] =
+        swaggerData.components.schemas[value];
+    });
+
+    if (Object.keys(body).length === 0) {
+      const emptyValidationResult = validateEmptyObject(schema.body);
+      if (!emptyValidationResult.valid) {
+        return emptyValidationResult;
+      }
+    }
+  }
+
+  const result = validator.validate(schema, responseSchema, true, false, true);
+  try {
+    if (result.valid && schema.status !== code) {
+      throw new Error(
+        `Expected a status value of ${code}, but received a status value of ${schema.status}`
+      );
+    }
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [
+        {
+          message: error.message,
+          stack: error.stack,
+        },
+      ],
+      expected: responseSchema,
+      obtained: schema,
+    };
+  }
+
+  return {
+    valid: result.valid,
+    errors:
+      result.errors?.map((error) => {
+        return {
+          message: error.message,
+          stack: error.stack,
+        };
+      }) || [],
+    expected: responseSchema,
+    obtained: schema,
+  };
+}
+
+// Validate primitive data type
+function validateType(type, value) {
+  try {
+    if (String(typeof value) !== type) {
+      throw new Error(
+        `Expected a value of type ${type}, but received a value of type ${typeof value}`
+      );
+    }
+    return {
+      valid: true,
+      errors: [],
+      expected: type,
+      obtained: `${String(typeof value)} (${value})`,
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [
+        {
+          message: error.message,
+          stack: error.stack,
+        },
+      ],
+      expected: type,
+      obtained: `${String(typeof value)} (${value})`,
+    };
+  }
+}
+
+// Validate no empty string
+function validateNonEmptyString(value) {
+  try {
+    if (typeof value !== 'string' || value.trim() === '') {
+      throw new Error(
+        `Expected a non-empty string, but received ${JSON.stringify(value)}`
+      );
+    }
+    return {
+      valid: true,
+      errors: [],
+      expected: 'Non empty string',
+      obtained: JSON.stringify(value),
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [
+        {
+          message: error.message,
+          stack: error.stack,
+        },
+      ],
+      expected: 'Non empty string',
+      obtained: JSON.stringify(value),
+    };
+  }
+}
+
+// Exports
+module.exports = {
+  validateSchema,
+  validateResponse,
+  validateType,
+  validateEmptyObject,
+  validateNonEmptyString,
+};

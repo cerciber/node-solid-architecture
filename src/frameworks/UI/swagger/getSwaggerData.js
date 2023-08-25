@@ -1,4 +1,7 @@
 /* eslint-disable global-require */
+// Imports
+const swaggerJsdoc = require('swagger-jsdoc');
+
 // Get Swagger Data
 function getSwaggerData() {
   // Http response schemas imports
@@ -28,7 +31,12 @@ function getSwaggerData() {
     ...response500Schema,
   };
 
-  return swaggerData;
+  // Set Swagger config
+  const swaggerDocs = swaggerJsdoc({
+    swaggerDefinition: swaggerData,
+    apis: ['./src/frameworks/web/express/routes/**/*.js'],
+  });
+  return swaggerDocs;
 }
 
 // Exports
