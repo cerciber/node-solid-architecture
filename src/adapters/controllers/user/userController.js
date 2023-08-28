@@ -161,13 +161,118 @@ async function addUserController(body) {
 }
 
 // Update by id
-async function updateUserController(id, newData) {
-  return updateUserCase(id, newData);
+async function updateUserController(params, body) {
+  // Get input
+  const { id } = params;
+  const { user } = body;
+
+  // Validate input
+  const inputValidation = validate([
+    [validateType, ['string', id], 'Param id not is an string type.'],
+    [validateNonEmptyString, [id], 'Param id is an empty string value.'],
+    [
+      validateObjectKeys,
+      [body, ['user']],
+      'Body is not an key object type with specific keys.',
+    ],
+    [validateSchema, ['User', user], 'User schema not have correct structure.'],
+  ]);
+
+  // Return incorrect validation input
+  if (!inputValidation.valid) {
+    return response.error(
+      400,
+      inputValidation.badMessage,
+      inputValidation.details
+    );
+  }
+
+  // Apply bussiness logic
+  const updateUserResponse = await updateUserCase(id, user);
+
+  // Validate output
+  const outputValidation = validateByStatus(updateUserResponse.status, {
+    200: [
+      [
+        validateResponse,
+        [200, updateUserResponse, { user: 'User' }],
+        `Response not have correct structure.`,
+      ],
+    ],
+    404: [
+      [
+        validateResponse,
+        [404, updateUserResponse, {}],
+        `Response not have correct structure.`,
+      ],
+    ],
+  });
+
+  // Return incorrect validation output
+  if (!outputValidation.valid) {
+    return response.error(
+      400,
+      outputValidation.badMessage,
+      outputValidation.details
+    );
+  }
+
+  // Return correct validation output
+  return updateUserResponse;
 }
 
 // Remove by id
-async function removeUserController(id) {
-  return removeUserCase(id);
+async function removeUserController(params) {
+  // Get input
+  const { id } = params;
+
+  // Validate input
+  const inputValidation = validate([
+    [validateType, ['string', id], 'Param id not is an string type.'],
+    [validateNonEmptyString, [id], 'Param id is an empty string value.'],
+  ]);
+
+  // Return incorrect validation input
+  if (!inputValidation.valid) {
+    return response.error(
+      400,
+      inputValidation.badMessage,
+      inputValidation.details
+    );
+  }
+
+  // Apply bussiness logic
+  const deleteUserResponse = await removeUserCase(id);
+
+  // Validate output
+  const outputValidation = validateByStatus(deleteUserResponse.status, {
+    200: [
+      [
+        validateResponse,
+        [200, deleteUserResponse, { user: 'User' }],
+        `Response not have correct structure.`,
+      ],
+    ],
+    404: [
+      [
+        validateResponse,
+        [404, deleteUserResponse, {}],
+        `Response not have correct structure.`,
+      ],
+    ],
+  });
+
+  // Return incorrect validation output
+  if (!outputValidation.valid) {
+    return response.error(
+      400,
+      outputValidation.badMessage,
+      outputValidation.details
+    );
+  }
+
+  // Return correct validation output
+  return deleteUserResponse;
 }
 
 // Exports
