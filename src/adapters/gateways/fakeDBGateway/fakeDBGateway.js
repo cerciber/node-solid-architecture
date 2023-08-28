@@ -38,7 +38,7 @@ async function update(tableName, id, newData) {
       return table[index];
     }
   }
-  return undefined;
+  return null;
 }
 
 // Remove by id
@@ -51,7 +51,7 @@ async function remove(tableName, id) {
       return table[index];
     }
   }
-  return undefined;
+  return null;
 }
 
 // Exports

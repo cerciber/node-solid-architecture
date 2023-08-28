@@ -31,7 +31,6 @@ async function addUserCase(newData) {
     });
   }
   const userAdded = await gateway.add(TABLE, newData);
-  console.log(userAdded);
   return response.success(200, 'User added successfully.', {
     user: userAdded,
   });
@@ -39,12 +38,24 @@ async function addUserCase(newData) {
 
 // Update by id
 async function updateUserCase(id, newData) {
-  return gateway.update(TABLE, id, newData);
+  const updatedUser = await gateway.update(TABLE, id, newData);
+  if (updatedUser) {
+    return response.success(200, 'User retrieved successfully.', {
+      user: updatedUser,
+    });
+  }
+  return response.success(404, 'User no exist.', {});
 }
 
 // Remove by id
 async function removeUserCase(id) {
-  return gateway.remove(TABLE, id);
+  const deletedUser = await gateway.remove(TABLE, id);
+  if (deletedUser) {
+    return response.success(200, 'User retrieved successfully.', {
+      user: deletedUser,
+    });
+  }
+  return response.success(404, 'User no exist.', {});
 }
 
 // Exports

@@ -146,12 +146,10 @@ router.post('/', async (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.put('/:id', async (req, res) => {
-  const userId = req.params.id;
-  const updatedUser = req.body;
   return sendResponse(
     req,
     res,
-    await updateUserController(userId, updatedUser)
+    await updateUserController(req.params, req.body)
   );
 });
 
@@ -189,8 +187,7 @@ router.put('/:id', async (req, res) => {
  *           - $ref: '#/components/responses/500'
  */
 router.delete('/:id', async (req, res) => {
-  const userId = req.params.id;
-  return sendResponse(req, res, await removeUserController(userId));
+  return sendResponse(req, res, await removeUserController(req.params));
 });
 
 // Exports
