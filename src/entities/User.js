@@ -1,4 +1,4 @@
-// Class
+// Entity
 class User {
   #id;
 

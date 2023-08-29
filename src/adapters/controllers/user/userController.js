@@ -1,5 +1,5 @@
 // Imports
-const response = require('@response');
+const response = require('@src/adapters/presenters/response');
 const {
   getUserslistCase,
   getUserByIdCase,

@@ -1,6 +1,6 @@
 // Imports
 const gateway = require('@src/adapters/gateways/fakeDBGateway/fakeDBGateway');
-const response = require('@response');
+const response = require('@src/adapters/presenters/response');
 
 // Define table users
 const TABLE = 'users';
