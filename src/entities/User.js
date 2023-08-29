@@ -24,6 +24,10 @@ class User {
   set name(newName) {
     this.#name = newName;
   }
+
+  toString() {
+    return `User: { id: ${this.#id}, name: ${this.#name} }`;
+  }
 }
 
 // Exports
