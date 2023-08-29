@@ -1,7 +1,7 @@
 // Imports
 const express = require('express');
-const response = require('@response');
-const sendResponse = require('@express/sendResponse');
+const response = require('@src/adapters/presenters/response');
+const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const usersRoute = require('./usersRoute/usersRoute');
 
 // Instance router

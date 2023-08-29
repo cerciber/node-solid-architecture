@@ -29,9 +29,7 @@
     "uuid": "^9.0.0"
   },
   "_moduleAliases": {
-    "@src": "./src",
-    "@response": "./src/adapters/presenters/response.js",
-    "@express": "./src/frameworks/web/express"
+    "@src": "./src"
   },
   "devDependencies": {
     "@types/module-alias": "^2.0.1",

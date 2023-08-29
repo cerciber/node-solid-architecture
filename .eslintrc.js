@@ -15,14 +15,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       alias: {
-        map: [
-          ['@src', path.resolve(__dirname, './src')],
-          [
-            '@response',
-            path.resolve(__dirname, './src/adapters/presenters/response.js'),
-          ],
-          ['@express', path.resolve(__dirname, './src/frameworks/web/express')],
-        ],
+        map: [['@src', path.resolve(__dirname, './src')]],
         extensions: ['.js'],
       },
     },
