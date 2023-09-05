@@ -16,6 +16,18 @@ async function get(tableName, id) {
   return null;
 }
 
+// Get by attributes
+async function getByAttributes(tableName, attributes) {
+  const table = database[tableName];
+  if (table) {
+    return table.filter((item) => {
+      const attributeKeys = Object.keys(attributes);
+      return attributeKeys.every((key) => item[key] === attributes[key]);
+    });
+  }
+  return null;
+}
+
 // Add
 async function add(tableName, newItem) {
   const table = database[tableName];
@@ -58,6 +70,7 @@ async function remove(tableName, id) {
 module.exports = {
   getAll,
   get,
+  getByAttributes,
   add,
   update,
   remove,

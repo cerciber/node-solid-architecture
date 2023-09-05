@@ -1,36 +1,46 @@
+/* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
-// Imports
+const fs = require('fs');
+const path = require('path');
 const swaggerJsdoc = require('swagger-jsdoc');
+
+// Load schemas from folder
+function loadSchemasFromFolder(folderPath) {
+  const schemas = {};
+  const files = fs.readdirSync(folderPath);
+
+  files.forEach((file) => {
+    if (file.endsWith('.js')) {
+      const schema = require(path.join(folderPath, file));
+      const schemaName = Object.keys(schema)[0];
+      schemas[schemaName] = schema[schemaName];
+    }
+  });
+
+  return schemas;
+}
 
 // Get Swagger Data
 function getSwaggerData() {
-  // Http response schemas imports
-  const response200Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/200Schema');
-  const response201Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/201Schema');
-  const response404Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/404Schema');
-  const response409Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/409Schema');
-  const response500Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/500Schema');
+  // Load schemas
+  const dataSchemas = loadSchemasFromFolder('@src/adapters/schemas');
 
-  // Data schemas imports
-  const userSchema = require('@src/adapters/schemas/users/userSchema');
-  const usersSchema = require('@src/adapters/schemas/users/usersSchema');
+  // Load response schemas
+  const responseSchemas = loadSchemasFromFolder(
+    '@src/adapters/schemas/response/responseSchemas/httpResponseSchemas'
+  );
 
   // Swagger data import
   const swaggerData = require('./swaggerData.json');
 
   // Set Schemas
   swaggerData.components.schemas = {
-    ...userSchema,
-    ...usersSchema,
+    ...dataSchemas,
   };
 
   // Set response schemas
   swaggerData.components.responses = {
-    ...response200Schema,
-    ...response201Schema,
-    ...response404Schema,
-    ...response409Schema,
-    ...response500Schema,
+    ...responseSchemas,
   };
 
   // Set Swagger config

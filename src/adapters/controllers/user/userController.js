@@ -134,14 +134,14 @@ async function addUserController(body) {
     200: [
       [
         validateResponse,
-        [200, addUserResponse, { user: 'User' }],
+        [200, addUserResponse, {}],
         `Response not have correct structure.`,
       ],
     ],
     409: [
       [
         validateResponse,
-        [409, addUserResponse, { user: 'User' }],
+        [409, addUserResponse, {}],
         `Response not have correct structure.`,
       ],
     ],
@@ -195,7 +195,7 @@ async function updateUserController(params, body) {
     200: [
       [
         validateResponse,
-        [200, updateUserResponse, { user: 'User' }],
+        [200, updateUserResponse, {}],
         `Response not have correct structure.`,
       ],
     ],
@@ -249,7 +249,7 @@ async function removeUserController(params) {
     200: [
       [
         validateResponse,
-        [200, deleteUserResponse, { user: 'User' }],
+        [200, deleteUserResponse, {}],
         `Response not have correct structure.`,
       ],
     ],
