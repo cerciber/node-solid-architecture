@@ -53,7 +53,7 @@ async function addUserCase(newData) {
   }
 
   // Return response
-  return response.success(200, 'User added successfully.');
+  return response.success(200, 'User added successfully.', {});
 }
 
 // Update by id

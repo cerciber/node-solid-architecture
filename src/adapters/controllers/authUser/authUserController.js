@@ -11,34 +11,35 @@ const {
 const {
   validateNonEmptyString,
   validateResponse,
-  validateType,
+  validateSchema,
+  validateObjectKeys,
 } = require('@src/adapters/controllers/validation/validationFunctions');
 
 // Get
-async function signinUserAuthController(params) {
+async function signinUserAuthController(body) {
   // Get input
-  const { username, password } = params;
+  const { userAuth } = body;
 
   // Validate input
   const inputValidation = validate([
     [
-      validateType,
-      ['string', username],
-      'Param username is not an string type.',
+      validateObjectKeys,
+      [body, ['userAuth']],
+      'Body is not an key object type with specific keys.',
+    ],
+    [
+      validateSchema,
+      ['UserAuthNoId', userAuth],
+      'UserAuthNoId schema not have correct structure.',
     ],
     [
       validateNonEmptyString,
-      [username],
+      [userAuth?.username],
       'Param username is an empty string value.',
     ],
     [
-      validateType,
-      ['string', password],
-      'Param password is not an string type.',
-    ],
-    [
       validateNonEmptyString,
-      [password],
+      [userAuth?.password],
       'Param password is an empty string value.',
     ],
   ]);
@@ -53,7 +54,10 @@ async function signinUserAuthController(params) {
   }
 
   // Apply bussiness logic
-  const userAuthResponse = await signinUserAuthCase(username, password);
+  const userAuthResponse = await signinUserAuthCase(
+    userAuth.username,
+    userAuth.password
+  );
 
   // Validate output
   const outputValidation = validateByStatus(userAuthResponse.status, {
@@ -89,28 +93,28 @@ async function signinUserAuthController(params) {
 // Add
 async function signupUserAuthController(body) {
   // Get input
-  const { username, password } = body;
+  const { userAuth } = body;
 
   // Validate input
   const inputValidation = validate([
     [
-      validateType,
-      ['string', username],
-      'Param username is not an string type.',
+      validateObjectKeys,
+      [body, ['userAuth']],
+      'Body is not an key object type with specific keys.',
+    ],
+    [
+      validateSchema,
+      ['UserAuthNoId', userAuth],
+      'UserAuthNoId schema not have correct structure.',
     ],
     [
       validateNonEmptyString,
-      [username],
+      [userAuth?.username],
       'Param username is an empty string value.',
     ],
     [
-      validateType,
-      ['string', password],
-      'Param password is not an string type.',
-    ],
-    [
       validateNonEmptyString,
-      [password],
+      [userAuth?.password],
       'Param password is an empty string value.',
     ],
   ]);
@@ -125,7 +129,10 @@ async function signupUserAuthController(body) {
   }
 
   // Apply bussiness logic
-  const addUserResponse = await signupUserAuthCase(username, password);
+  const addUserResponse = await signupUserAuthCase(
+    userAuth.username,
+    userAuth.password
+  );
 
   // Validate output
   const outputValidation = validateByStatus(addUserResponse.status, {

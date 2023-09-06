@@ -11,6 +11,7 @@ const exampleItem = getSchemaExampleFromExamples(userSchema);
 // Exports
 module.exports = _.cloneDeep({
   Users: {
+    title: 'Users',
     type: 'array',
     items: userSchema.User,
     example: [exampleItem, exampleItem, exampleItem],

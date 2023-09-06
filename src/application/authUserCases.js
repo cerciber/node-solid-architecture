@@ -15,7 +15,7 @@ async function signinUserAuthCase(username, password) {
   });
 
   // Check if username or password is incorrect
-  if (!gatewayUserAuth) {
+  if (!gatewayUserAuth || gatewayUserAuth.length === 0) {
     // Return response
     return response.success(404, 'User Auth incorrect.', {});
   }
@@ -37,11 +37,11 @@ async function signupUserAuthCase(username, password) {
   // Check if user exist
   if (!gatewayUserAdded) {
     // Return response
-    return response.success(409, 'User Auth already exist.');
+    return response.success(409, 'User Auth already exist.', {});
   }
 
   // Return response
-  return response.success(200, 'User Auth registered successfully.');
+  return response.success(200, 'User Auth registered successfully.', {});
 }
 
 // Exports

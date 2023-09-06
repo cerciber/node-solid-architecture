@@ -3,6 +3,7 @@ const express = require('express');
 const response = require('@src/adapters/presenters/response');
 const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const usersRoute = require('./usersRoute/usersRoute');
+const authRoute = require('./authRoute/authRoute');
 
 // Instance router
 const router = express.Router();
@@ -39,6 +40,7 @@ router.get('/', async (req, res) => {
 
 // Include subpaths
 router.use('/users', usersRoute);
+router.use('/auth', authRoute);
 
 // Exports
 module.exports = router;
