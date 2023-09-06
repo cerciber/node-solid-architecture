@@ -1,37 +1,58 @@
+/* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 // Imports
+const fs = require('fs');
 const swaggerJsdoc = require('swagger-jsdoc');
+
+// Load schemas from folder
+function loadSchemasFromFolder(folderPath) {
+  // Create object to store schemas
+  const schemas = {};
+
+  // Get absolute path from alias
+  const absoluteCurrentPathParts = __dirname.split('\\src');
+  const srcPath = absoluteCurrentPathParts
+    .slice(0, absoluteCurrentPathParts.length - 1)
+    .join('\\src');
+  const aliasPathCorrection = folderPath
+    .replace(/@/, '\\')
+    .replace(/\//g, '\\');
+  const absolutePath = srcPath + aliasPathCorrection;
+
+  // Read files
+  const files = fs.readdirSync(absolutePath);
+
+  // Add schemas to object
+  files.forEach((file) => {
+    if (file.endsWith('.js')) {
+      const schema = require(`${folderPath}/${file}`);
+      const schemaName = Object.keys(schema)[0];
+      schemas[schemaName] = schema[schemaName];
+    }
+  });
+
+  // Return schemas object
+  return schemas;
+}
 
 // Get Swagger Data
 function getSwaggerData() {
-  // Http response schemas imports
-  const response200Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/200Schema');
-  const response201Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/201Schema');
-  const response404Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/404Schema');
-  const response409Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/409Schema');
-  const response500Schema = require('@src/adapters/schemas/response/responseSchemas/httpResponseSchemas/500Schema');
+  // Load schemas
+  const dataSchemas = loadSchemasFromFolder('@src/adapters/schemas');
 
-  // Data schemas imports
-  const userSchema = require('@src/adapters/schemas/users/userSchema');
-  const usersSchema = require('@src/adapters/schemas/users/usersSchema');
+  // Load response schemas
+  const responseSchemas = loadSchemasFromFolder(
+    '@src/adapters/schemas/response/responseSchemas/httpResponseSchemas'
+  );
 
   // Swagger data import
   const swaggerData = require('./swaggerData.json');
 
   // Set Schemas
-  swaggerData.components.schemas = {
-    ...userSchema,
-    ...usersSchema,
-  };
+  swaggerData.components.schemas = dataSchemas;
 
   // Set response schemas
-  swaggerData.components.responses = {
-    ...response200Schema,
-    ...response201Schema,
-    ...response404Schema,
-    ...response409Schema,
-    ...response500Schema,
-  };
+  swaggerData.components.responses = responseSchemas;
 
   // Set Swagger config
   const swaggerDocs = swaggerJsdoc({

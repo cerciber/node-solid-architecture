@@ -5,10 +5,10 @@ const database = {
     { id: '2', name: 'Jane' },
     { id: '3', name: 'Alice' },
   ],
-  products: [
-    { id: '4', name: 'Product 1', price: 10 },
-    { id: '5', name: 'Product 2', price: 20 },
-    { id: '6', name: 'Product 3', price: 30 },
+  authUsers: [
+    { id: '1', username: 'Juan123', password: '123' },
+    { id: '2', username: 'Bob123', password: '123' },
+    { id: '3', username: 'Fred123', password: '123' },
   ],
 };
 

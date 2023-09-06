@@ -92,12 +92,6 @@ router.get('/:id', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/201'
  *           - description: User created successfully.
- *           - content:
- *               application/json:
- *                 schema:
- *                   properties:
- *                     body:
- *                        $ref: '#/components/schemas/User'
  *       500:
  *         allOf:
  *           - $ref: '#/components/responses/500'
@@ -132,12 +126,6 @@ router.post('/', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/200'
  *           - description: User updated successfully.
- *           - content:
- *               application/json:
- *                 schema:
- *                   properties:
- *                     body:
- *                        $ref: '#/components/schemas/User'
  *       404:
  *         allOf:
  *           - $ref: '#/components/responses/404'
@@ -173,12 +161,6 @@ router.put('/:id', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/200'
  *           - description: User deleted successfully.
- *           - content:
- *               application/json:
- *                 schema:
- *                   properties:
- *                     body:
- *                        $ref: '#/components/schemas/User'
  *       404:
  *         allOf:
  *           - $ref: '#/components/responses/404'

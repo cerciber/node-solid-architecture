@@ -25,19 +25,15 @@
   "tags": [
     {
       "name": "Users",
-      "description": "Users rol in system.",
-      "externalDocs": {
-        "description": "Find more about Users",
-        "url": ""
-      }
+      "description": "Users request."
+    },
+    {
+      "name": "Auth",
+      "description": "Auth request."
     },
     {
       "name": "General",
-      "description": "General requests.",
-      "externalDocs": {
-        "description": "Find more about General",
-        "url": ""
-      }
+      "description": "General requests."
     }
   ],
   "components": {
