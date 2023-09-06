@@ -24,7 +24,6 @@ const router = express.Router();
  *       200:
  *         allOf:
  *           - $ref: '#/components/responses/200'
- *           - description: List of users obtained successfully.
  *           - content:
  *               application/json:
  *                 schema:
@@ -58,13 +57,18 @@ router.get('/', async (req, res) => {
  *       200:
  *         allOf:
  *           - $ref: '#/components/responses/200'
- *           - description: User obtained successfully.
  *           - content:
  *               application/json:
  *                 schema:
  *                   properties:
  *                     body:
  *                       $ref: '#/components/schemas/User'
+ *       400:
+ *         allOf:
+ *           - $ref: '#/components/responses/400'
+ *       404:
+ *         allOf:
+ *           - $ref: '#/components/responses/404'
  *       500:
  *         allOf:
  *           - $ref: '#/components/responses/500'
@@ -91,7 +95,12 @@ router.get('/:id', async (req, res) => {
  *       201:
  *         allOf:
  *           - $ref: '#/components/responses/201'
- *           - description: User created successfully.
+ *       400:
+ *         allOf:
+ *           - $ref: '#/components/responses/400'
+ *       409:
+ *         allOf:
+ *           - $ref: '#/components/responses/409'
  *       500:
  *         allOf:
  *           - $ref: '#/components/responses/500'
@@ -125,7 +134,9 @@ router.post('/', async (req, res) => {
  *       200:
  *         allOf:
  *           - $ref: '#/components/responses/200'
- *           - description: User updated successfully.
+ *       400:
+ *         allOf:
+ *           - $ref: '#/components/responses/400'
  *       404:
  *         allOf:
  *           - $ref: '#/components/responses/404'
@@ -160,7 +171,9 @@ router.put('/:id', async (req, res) => {
  *       200:
  *         allOf:
  *           - $ref: '#/components/responses/200'
- *           - description: User deleted successfully.
+ *       400:
+ *         allOf:
+ *           - $ref: '#/components/responses/400'
  *       404:
  *         allOf:
  *           - $ref: '#/components/responses/404'

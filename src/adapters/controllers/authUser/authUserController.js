@@ -80,7 +80,7 @@ async function signinUserAuthController(body) {
   // Return incorrect validation output
   if (!outputValidation.valid) {
     return response.error(
-      400,
+      500,
       outputValidation.badMessage,
       outputValidation.details
     );
@@ -136,10 +136,10 @@ async function signupUserAuthController(body) {
 
   // Validate output
   const outputValidation = validateByStatus(addUserResponse.status, {
-    200: [
+    201: [
       [
         validateResponse,
-        [200, addUserResponse, {}],
+        [201, addUserResponse, {}],
         `Response not have correct structure.`,
       ],
     ],
@@ -155,7 +155,7 @@ async function signupUserAuthController(body) {
   // Return incorrect validation output
   if (!outputValidation.valid) {
     return response.error(
-      400,
+      500,
       outputValidation.badMessage,
       outputValidation.details
     );

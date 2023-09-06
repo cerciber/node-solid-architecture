@@ -41,7 +41,7 @@ async function signupUserAuthCase(username, password) {
   }
 
   // Return response
-  return response.success(200, 'User Auth registered successfully.', {});
+  return response.success(201, 'User Auth registered successfully.', {});
 }
 
 // Exports
