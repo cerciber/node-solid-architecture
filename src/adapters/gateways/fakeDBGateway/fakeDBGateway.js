@@ -37,6 +37,7 @@ async function add(tableName, newItem) {
   const newId = uuidv4();
   const newItemWithId = { id: newId, ...newItem };
   table.push(newItemWithId);
+  console.log(table);
   return newItemWithId;
 }
 

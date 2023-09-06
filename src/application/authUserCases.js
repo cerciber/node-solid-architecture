@@ -2,6 +2,7 @@
 const gateway = require('@src/adapters/gateways/fakeDBGateway/fakeDBGateway');
 const response = require('@src/adapters/presenters/response');
 const Auth = require('@src/entities/Auth');
+const AuthUser = require('@src/entities/AuthUser');
 
 // Define table users auth
 const TABLE = 'authUsers';
@@ -11,11 +12,24 @@ async function signinUserAuthCase(username, password) {
   // Get gateway data
   const gatewayUserAuth = await gateway.getByAttributes(TABLE, {
     username,
-    password,
   });
 
-  // Check if username or password is incorrect
+  // Check if username is incorrect
   if (!gatewayUserAuth || gatewayUserAuth.length === 0) {
+    // Return response
+    return response.success(404, 'User Auth incorrect.', {});
+  }
+
+  // Instance AuthUser entity
+  const authUser = new AuthUser(
+    undefined,
+    gatewayUserAuth.username,
+    gatewayUserAuth.password,
+    false
+  );
+
+  // Check if password is incorrect
+  if (!authUser.comparePassword(password)) {
     // Return response
     return response.success(404, 'User Auth incorrect.', {});
   }
@@ -31,8 +45,14 @@ async function signinUserAuthCase(username, password) {
 
 // Add
 async function signupUserAuthCase(username, password) {
+  // Instance AuthUser entity
+  const authUser = new AuthUser(undefined, username, password, false);
+
   // Add gateway data
-  const gatewayUserAdded = await gateway.add(TABLE, { username, password });
+  const gatewayUserAdded = await gateway.add(TABLE, {
+    username: authUser.username,
+    password: authUser.getPassword(),
+  });
 
   // Check if user exist
   if (!gatewayUserAdded) {
