@@ -31,7 +31,7 @@ const router = express.Router();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get(paths.root, async (req, res) => {
+router.get(paths.root.path, async (req, res) => {
   return sendResponse(
     req,
     res,
@@ -40,8 +40,8 @@ router.get(paths.root, async (req, res) => {
 });
 
 // Include subpaths
-router.use(paths.root, usersRoute);
-router.use(paths.root, authRoute);
+router.use(paths.root.path, usersRoute);
+router.use(paths.root.path, authRoute);
 
 // Exports
 module.exports = router;
