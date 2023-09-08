@@ -44,7 +44,7 @@ const router = express.Router();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post(paths.authSignIn, async (req, res) => {
+router.post(paths.authSignIn.path, async (req, res) => {
   return sendResponse(req, res, await signinUserAuthController(req.body));
 });
 
@@ -82,7 +82,7 @@ router.post(paths.authSignIn, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post(paths.authSignUp, async (req, res) => {
+router.post(paths.authSignUp.path, async (req, res) => {
   return sendResponse(req, res, await signupUserAuthController(req.body));
 });
 

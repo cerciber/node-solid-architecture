@@ -35,7 +35,7 @@ function getSwaggerData() {
     if (match) {
       const value = match[1];
       const expresionToReplace = match[0];
-      const resultPath = path.replace(expresionToReplace, paths[value]);
+      const resultPath = path.replace(expresionToReplace, paths[value].path);
       swaggerDocs.paths[resultPath] = swaggerDocs.paths[path];
       delete swaggerDocs.paths[path];
     }

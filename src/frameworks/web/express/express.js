@@ -17,8 +17,8 @@ app.use(cors()); // Allow comunication of all origins
 app.use(express.static('public')); // Allow static files on public (For Swagger)
 
 // Use routes
-app.use(paths.apiDocs, swagger.serve, swagger.UISetup); // Use Swagger UI
-app.use(paths.root, rootRoute); // Use API Routes
+app.use(paths.apiDocs.path, swagger.serve, swagger.UISetup); // Use Swagger UI
+app.use(paths.root.path, rootRoute); // Use API Routes
 
 // Manage errors
 app.use(errorMiddleware);
