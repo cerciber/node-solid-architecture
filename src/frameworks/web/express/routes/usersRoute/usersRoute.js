@@ -8,13 +8,14 @@ const {
   updateUserController,
   removeUserController,
 } = require('@src/adapters/controllers/user/userController');
+const paths = require('@src/utils/statics/paths');
 
 // Instance router
 const router = express.Router();
 
 /**
  * @swagger
- * /users:
+ * ${users}:
  *   get:
  *     tags:
  *       - Users
@@ -34,13 +35,13 @@ const router = express.Router();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get('/', async (req, res) => {
+router.get(paths.users, async (req, res) => {
   return sendResponse(req, res, await getUserslistController());
 });
 
 /**
  * @swagger
- * /users/{id}:
+ * ${users}/{id}:
  *   get:
  *     tags:
  *       - Users
@@ -73,13 +74,13 @@ router.get('/', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get('/:id', async (req, res) => {
+router.get(`${paths.users}:id`, async (req, res) => {
   return sendResponse(req, res, await getUserByIdController(req.params));
 });
 
 /**
  * @swagger
- * /users:
+ * ${users}:
  *   post:
  *     tags:
  *       - Users
@@ -105,13 +106,13 @@ router.get('/:id', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post('/', async (req, res) => {
+router.post(paths.users, async (req, res) => {
   return sendResponse(req, res, await addUserController(req.body));
 });
 
 /**
  * @swagger
- * /users/{id}:
+ * ${users}/{id}:
  *   put:
  *     tags:
  *       - Users
@@ -144,7 +145,7 @@ router.post('/', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.put('/:id', async (req, res) => {
+router.put(`${paths.users}:id`, async (req, res) => {
   return sendResponse(
     req,
     res,
@@ -154,7 +155,7 @@ router.put('/:id', async (req, res) => {
 
 /**
  * @swagger
- * /users/{id}:
+ * ${users}/{id}:
  *   delete:
  *     tags:
  *       - Users
@@ -181,7 +182,7 @@ router.put('/:id', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.delete('/:id', async (req, res) => {
+router.delete(`${paths.users}:id`, async (req, res) => {
   return sendResponse(req, res, await removeUserController(req.params));
 });
 

@@ -10,20 +10,22 @@ const database = {
       id: '1',
       username: 'Juan123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
-      permissions: { users: ['GET', 'POST', 'PUT', 'DELETE'] },
+      permissions: [
+        { subpath: 'user', methods: ['GET', 'POST', 'PUT', 'DELETE'] },
+      ],
     },
     {
       id: '2',
       username: 'Bob123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
-      permissions: { users: ['GET', 'POST'] },
+      permissions: [{ subpath: 'user', methods: ['GET', 'POST'] }],
     },
     {
       id: '3',
       username: 'Fred123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
       rol: 'reader',
-      permissions: { users: ['GET'] },
+      permissions: [{ subpath: 'user', methods: ['GET'] }],
     },
   ],
   _constrains: {

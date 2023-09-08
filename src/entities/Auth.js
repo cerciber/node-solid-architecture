@@ -1,6 +1,6 @@
 // Imports
 const jwt = require('jsonwebtoken');
-const config = require('@src/utils/config');
+const config = require('@src/utils/statics/config');
 
 // Entity
 class Auth {

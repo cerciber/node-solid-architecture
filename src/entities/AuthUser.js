@@ -1,6 +1,6 @@
 // Imports
 const bcrypt = require('bcrypt');
-const config = require('@src/utils/config');
+const config = require('@src/utils/statics/config');
 
 // Entity
 class AuthUser {

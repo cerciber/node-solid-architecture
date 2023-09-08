@@ -2,7 +2,8 @@
 const express = require('express');
 require('express-async-errors');
 const cors = require('cors');
-const config = require('@src/utils/config');
+const config = require('@src/utils/statics/config');
+const paths = require('@src/utils/statics/paths');
 const swagger = require('@src/frameworks/UI/swagger/swagger');
 const rootRoute = require('./routes/rootRoute');
 const errorMiddleware = require('./middelwares/errorMiddleware');
@@ -16,8 +17,8 @@ app.use(cors()); // Allow comunication of all origins
 app.use(express.static('public')); // Allow static files on public (For Swagger)
 
 // Use routes
-app.use('/api-docs', swagger.serve, swagger.UISetup); // Use Swagger UI
-app.use('/', rootRoute); // Use API Routes
+app.use(paths.apiDocs, swagger.serve, swagger.UISetup); // Use Swagger UI
+app.use(paths.root, rootRoute); // Use API Routes
 
 // Manage errors
 app.use(errorMiddleware);

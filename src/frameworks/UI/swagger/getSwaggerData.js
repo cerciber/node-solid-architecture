@@ -1,39 +1,7 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
 // Imports
-const fs = require('fs');
 const swaggerJsdoc = require('swagger-jsdoc');
-
-// Load schemas from folder
-function loadSchemasFromFolder(folderPath) {
-  // Create object to store schemas
-  const schemas = {};
-
-  // Get absolute path from alias
-  const absoluteCurrentPathParts = __dirname.split('\\src');
-  const srcPath = absoluteCurrentPathParts
-    .slice(0, absoluteCurrentPathParts.length - 1)
-    .join('\\src');
-  const aliasPathCorrection = folderPath
-    .replace(/@/, '\\')
-    .replace(/\//g, '\\');
-  const absolutePath = srcPath + aliasPathCorrection;
-
-  // Read files
-  const files = fs.readdirSync(absolutePath);
-
-  // Add schemas to object
-  files.forEach((file) => {
-    if (file.endsWith('.js')) {
-      const schema = require(`${folderPath}/${file}`);
-      const schemaName = Object.keys(schema)[0];
-      schemas[schemaName] = schema[schemaName];
-    }
-  });
-
-  // Return schemas object
-  return schemas;
-}
+const paths = require('@src/utils/statics/paths');
+const loadSchemasFromFolder = require('./loadSchemasFromFolder');
 
 // Get Swagger Data
 function getSwaggerData() {
@@ -46,6 +14,7 @@ function getSwaggerData() {
   );
 
   // Swagger data import
+  // eslint-disable-next-line global-require
   const swaggerData = require('./swaggerData.json');
 
   // Set Schemas
@@ -59,6 +28,19 @@ function getSwaggerData() {
     swaggerDefinition: swaggerData,
     apis: ['./src/frameworks/web/express/routes/**/*.js'],
   });
+
+  // Change paths references
+  Object.keys(swaggerDocs.paths).forEach((path) => {
+    const match = path.match(/\${([^}]+)}/);
+    if (match) {
+      const value = match[1];
+      const expresionToReplace = match[0];
+      const resultPath = path.replace(expresionToReplace, paths[value]);
+      swaggerDocs.paths[resultPath] = swaggerDocs.paths[path];
+      delete swaggerDocs.paths[path];
+    }
+  });
+
   return swaggerDocs;
 }
 

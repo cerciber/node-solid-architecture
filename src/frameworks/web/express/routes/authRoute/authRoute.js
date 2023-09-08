@@ -5,13 +5,14 @@ const {
   signinUserAuthController,
   signupUserAuthController,
 } = require('@src/adapters/controllers/authUser/authUserController');
+const paths = require('@src/utils/statics/paths');
 
 // Instance router
 const router = express.Router();
 
 /**
  * @swagger
- * /auth/signin:
+ * ${authSignIn}:
  *   post:
  *     tags:
  *       - Auth
@@ -43,13 +44,13 @@ const router = express.Router();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post('/signin', async (req, res) => {
+router.post(paths.authSignIn, async (req, res) => {
   return sendResponse(req, res, await signinUserAuthController(req.body));
 });
 
 /**
  * @swagger
- * /auth/signup:
+ * ${authSignUp}:
  *   post:
  *     tags:
  *       - Auth
@@ -81,7 +82,7 @@ router.post('/signin', async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post('/signup', async (req, res) => {
+router.post(paths.authSignUp, async (req, res) => {
   return sendResponse(req, res, await signupUserAuthController(req.body));
 });
 
