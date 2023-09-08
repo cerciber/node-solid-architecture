@@ -2,6 +2,7 @@
 const gateway = require('@src/adapters/gateways/fakeDBGateway/fakeDBGateway');
 const response = require('@src/adapters/presenters/response');
 const Auth = require('@src/entities/Auth');
+const AuthUser = require('@src/entities/AuthUser');
 
 // Define table users auth
 const TABLE = 'authUsers';
@@ -11,17 +12,30 @@ async function signinUserAuthCase(username, password) {
   // Get gateway data
   const gatewayUserAuth = await gateway.getByAttributes(TABLE, {
     username,
-    password,
   });
 
-  // Check if username or password is incorrect
+  // Check if username is incorrect
   if (!gatewayUserAuth || gatewayUserAuth.length === 0) {
     // Return response
     return response.success(404, 'User Auth incorrect.', {});
   }
 
+  // Instance AuthUser entity
+  const authUser = new AuthUser(
+    undefined,
+    gatewayUserAuth[0].username,
+    gatewayUserAuth[0].password,
+    true
+  );
+
+  // Check if password is incorrect
+  if (!(await authUser.comparePassword(password))) {
+    // Return response
+    return response.success(404, 'User Auth incorrect.', {});
+  }
+
   // Generate token
-  const tokenSchema = new Auth().generateToken({ id: gatewayUserAuth.id });
+  const tokenSchema = new Auth().generateToken({ id: gatewayUserAuth[0].id });
 
   // Return response
   return response.success(200, 'User Auth retrieved successfully.', {
@@ -31,8 +45,14 @@ async function signinUserAuthCase(username, password) {
 
 // Add
 async function signupUserAuthCase(username, password) {
+  // Instance AuthUser entity
+  const authUser = new AuthUser(undefined, username, password, false);
+
   // Add gateway data
-  const gatewayUserAdded = await gateway.add(TABLE, { username, password });
+  const gatewayUserAdded = await gateway.add(TABLE, {
+    username: authUser.username,
+    password: authUser.getPassword(),
+  });
 
   // Check if user exist
   if (!gatewayUserAdded) {
@@ -41,7 +61,7 @@ async function signupUserAuthCase(username, password) {
   }
 
   // Return response
-  return response.success(200, 'User Auth registered successfully.', {});
+  return response.success(201, 'User Auth registered successfully.', {});
 }
 
 // Exports

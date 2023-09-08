@@ -5,13 +5,52 @@ const {
   signinUserAuthController,
   signupUserAuthController,
 } = require('@src/adapters/controllers/authUser/authUserController');
+const paths = require('@src/utils/statics/paths');
 
 // Instance router
 const router = express.Router();
 
 /**
  * @swagger
- * /signup:
+ * ${authSignIn}:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Authenticate user on system.
+ *     description: Validate user Authentication.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserAuth'
+ *     responses:
+ *       200:
+ *         allOf:
+ *           - $ref: '#/components/responses/200'
+ *           - content:
+ *               application/json:
+ *                 schema:
+ *                   properties:
+ *                     body:
+ *                        $ref: '#/components/schemas/User'
+ *       400:
+ *         allOf:
+ *           - $ref: '#/components/responses/400'
+ *       404:
+ *         allOf:
+ *           - $ref: '#/components/responses/404'
+ *       500:
+ *         allOf:
+ *           - $ref: '#/components/responses/500'
+ */
+router.post(paths.authSignIn, async (req, res) => {
+  return sendResponse(req, res, await signinUserAuthController(req.body));
+});
+
+/**
+ * @swagger
+ * ${authSignUp}:
  *   post:
  *     tags:
  *       - Auth
@@ -22,57 +61,29 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/UserAuth'
  *     responses:
  *       201:
  *         allOf:
  *           - $ref: '#/components/responses/201'
- *           - description: User registered successfully.
  *           - content:
  *               application/json:
  *                 schema:
  *                   properties:
  *                     body:
  *                        $ref: '#/components/schemas/User'
+ *       400:
+ *         allOf:
+ *           - $ref: '#/components/responses/400'
+ *       409:
+ *         allOf:
+ *           - $ref: '#/components/responses/409'
  *       500:
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post('/signup', async (req, res) => {
+router.post(paths.authSignUp, async (req, res) => {
   return sendResponse(req, res, await signupUserAuthController(req.body));
-});
-
-/**
- * @swagger
- * /users:
- *   post:
- *     tags:
- *       - Users
- *     summary: Create a new user
- *     description: Creates a new user with the provided data.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/User'
- *     responses:
- *       201:
- *         allOf:
- *           - $ref: '#/components/responses/201'
- *           - description: User created successfully.
- *           - content:
- *               application/json:
- *                 schema:
- *                   properties:
- *                     body:
- *                        $ref: '#/components/schemas/User'
- *       500:
- *         allOf:
- *           - $ref: '#/components/responses/500'
- */
-router.post('/signin', async (req, res) => {
-  return sendResponse(req, res, await signinUserAuthController(req.body));
 });
 
 // Exports

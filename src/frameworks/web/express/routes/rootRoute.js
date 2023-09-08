@@ -2,6 +2,7 @@
 const express = require('express');
 const response = require('@src/adapters/presenters/response');
 const sendResponse = require('@src/frameworks/web/express/sendResponse');
+const paths = require('@src/utils/statics/paths');
 const usersRoute = require('./usersRoute/usersRoute');
 const authRoute = require('./authRoute/authRoute');
 
@@ -10,7 +11,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /:
+ * ${root}:
  *   get:
  *     tags:
  *       - General
@@ -30,7 +31,7 @@ const router = express.Router();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get('/', async (req, res) => {
+router.get(paths.root, async (req, res) => {
   return sendResponse(
     req,
     res,
@@ -39,8 +40,8 @@ router.get('/', async (req, res) => {
 });
 
 // Include subpaths
-router.use('/users', usersRoute);
-router.use('/auth', authRoute);
+router.use(paths.root, usersRoute);
+router.use(paths.root, authRoute);
 
 // Exports
 module.exports = router;

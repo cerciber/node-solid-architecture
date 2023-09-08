@@ -38,7 +38,7 @@ async function getUserslistController() {
   // Return incorrect validation output
   if (!outputValidation.valid) {
     return response.error(
-      400,
+      500,
       outputValidation.badMessage,
       outputValidation.details
     );
@@ -92,7 +92,7 @@ async function getUserByIdController(params) {
   // Return incorrect validation output
   if (!outputValidation.valid) {
     return response.error(
-      400,
+      500,
       outputValidation.badMessage,
       outputValidation.details
     );
@@ -150,7 +150,7 @@ async function addUserController(body) {
   // Return incorrect validation output
   if (!outputValidation.valid) {
     return response.error(
-      400,
+      500,
       outputValidation.badMessage,
       outputValidation.details
     );
@@ -211,7 +211,7 @@ async function updateUserController(params, body) {
   // Return incorrect validation output
   if (!outputValidation.valid) {
     return response.error(
-      400,
+      500,
       outputValidation.badMessage,
       outputValidation.details
     );
@@ -265,7 +265,7 @@ async function removeUserController(params) {
   // Return incorrect validation output
   if (!outputValidation.valid) {
     return response.error(
-      400,
+      500,
       outputValidation.badMessage,
       outputValidation.details
     );
