@@ -23,19 +23,19 @@ async function signinUserAuthCase(username, password) {
   // Instance AuthUser entity
   const authUser = new AuthUser(
     undefined,
-    gatewayUserAuth.username,
-    gatewayUserAuth.password,
-    false
+    gatewayUserAuth[0].username,
+    gatewayUserAuth[0].password,
+    true
   );
 
   // Check if password is incorrect
-  if (!authUser.comparePassword(password)) {
+  if (!(await authUser.comparePassword(password))) {
     // Return response
     return response.success(404, 'User Auth incorrect.', {});
   }
 
   // Generate token
-  const tokenSchema = new Auth().generateToken({ id: gatewayUserAuth.id });
+  const tokenSchema = new Auth().generateToken({ id: gatewayUserAuth[0].id });
 
   // Return response
   return response.success(200, 'User Auth retrieved successfully.', {

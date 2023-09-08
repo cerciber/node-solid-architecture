@@ -26,5 +26,6 @@ app.use(errorMiddleware);
 // Listen
 app.listen(config.frameworks.web.express.port, () => {
   const message = `Server running in mode: ${config.enviroment} at port: ${config.frameworks.web.express.port}.`;
+  // eslint-disable-next-line no-console
   console.log(message);
 });
