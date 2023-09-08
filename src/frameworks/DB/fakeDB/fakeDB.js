@@ -1,3 +1,7 @@
+// Imports
+const { getKeyByValue } = require('@src/utils/functions/getKeyByValue');
+const paths = require('@src/utils/statics/paths');
+
 // Database simulation
 const database = {
   users: [
@@ -11,21 +15,31 @@ const database = {
       username: 'Juan123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
       permissions: [
-        { subpath: 'user', methods: ['GET', 'POST', 'PUT', 'DELETE'] },
+        {
+          path: getKeyByValue(paths, paths.users),
+          methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        },
       ],
     },
     {
       id: '2',
       username: 'Bob123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
-      permissions: [{ subpath: 'user', methods: ['GET', 'POST'] }],
+      permissions: [
+        {
+          path: getKeyByValue(paths, paths.users),
+          methods: ['GET', 'POST'],
+        },
+      ],
     },
     {
       id: '3',
       username: 'Fred123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
       rol: 'reader',
-      permissions: [{ subpath: 'user', methods: ['GET'] }],
+      permissions: [
+        { path: getKeyByValue(paths, paths.users), methods: ['GET'] },
+      ],
     },
   ],
   _constrains: {
