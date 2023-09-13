@@ -3,7 +3,7 @@ const paths = {};
 
 // Define paths
 paths.root = { path: '/', public: false };
-paths.apiDocs = { path: '/api-docs', public: false };
+paths.apiDocs = { path: '/api-docs', public: true };
 paths.users = { path: '/users', public: false };
 paths.auth = { path: '/auth', public: false };
 paths.authSignIn = { path: `${paths.auth.path}/signin`, public: true };

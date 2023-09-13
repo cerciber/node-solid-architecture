@@ -1,13 +1,10 @@
 // Imports
-const express = require('express');
 const response = require('@src/adapters/presenters/response');
 const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const paths = require('@src/utils/statics/paths');
+const router = require('@src/frameworks/web/express/router')();
 const usersRoute = require('./usersRoute/usersRoute');
 const authRoute = require('./authRoute/authRoute');
-
-// Instance router
-const router = express.Router();
 
 /**
  * @swagger
@@ -40,8 +37,8 @@ router.get(paths.root.path, async (req, res) => {
 });
 
 // Include subpaths
-router.use(paths.root.path, usersRoute);
-router.use(paths.root.path, authRoute);
+router.router.use(paths.root.path, usersRoute.router);
+router.router.use(paths.root.path, authRoute.router);
 
 // Exports
 module.exports = router;

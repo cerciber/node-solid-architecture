@@ -3,7 +3,7 @@ module.exports = {
   frameworks: {
     web: {
       express: {
-        port: process.env.EXPRESS_PORT || 3000,
+        port: Number(process.env.EXPRESS_PORT) || 3000,
       },
     },
   },

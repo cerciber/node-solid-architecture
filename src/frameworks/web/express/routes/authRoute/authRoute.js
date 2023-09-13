@@ -1,14 +1,11 @@
 // Imports
-const express = require('express');
 const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const {
   signinUserAuthController,
   signupUserAuthController,
-} = require('@src/adapters/controllers/authUser/authUserController');
+} = require('@src/adapters/controllers/auth/authUserController');
 const paths = require('@src/utils/statics/paths');
-
-// Instance router
-const router = express.Router();
+const router = require('@src/frameworks/web/express/router')();
 
 /**
  * @swagger

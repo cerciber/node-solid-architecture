@@ -59,6 +59,10 @@ function validateSchema(name, schema) {
 
 // Validate response swwagger schema
 function validateResponse(code, schema, body) {
+  if (!swaggerData.components.responses[code]) {
+    throw new Error(`Response schema ${code} no exist`);
+  }
+
   const responseSchema = _.cloneDeep(
     swaggerData.components.responses[code].content['application/json'].schema
   );
@@ -248,6 +252,38 @@ function validateObjectKeys(value, expectedKeys) {
   }
 }
 
+// Validate regular expression
+function validateRegex(regexPattern, value) {
+  try {
+    if (!(regexPattern instanceof RegExp)) {
+      throw new Error('Expected a regular expression pattern');
+    }
+
+    if (!regexPattern.test(value)) {
+      throw new Error(`Value "${value}" does not match the expected pattern`);
+    }
+
+    return {
+      valid: true,
+      errors: [],
+      expected: regexPattern.source,
+      obtained: value,
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      errors: [
+        {
+          message: error.message,
+          stack: error.stack,
+        },
+      ],
+      expected: regexPattern.source,
+      obtained: value,
+    };
+  }
+}
+
 // Exports
 module.exports = {
   validateSchema,
@@ -257,4 +293,5 @@ module.exports = {
   validateNonEmptyString,
   validateNonArrayObject,
   validateObjectKeys,
+  validateRegex,
 };

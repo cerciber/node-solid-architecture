@@ -8,6 +8,10 @@ exports.success = (status, message, body) => {
 };
 
 exports.error = (status, message, body) => {
+  // eslint-disable-next-line no-console
+  console.log('Controlled error:');
+  // eslint-disable-next-line no-console
+  console.log(body);
   return {
     status,
     message,
