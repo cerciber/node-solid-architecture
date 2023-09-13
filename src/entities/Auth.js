@@ -18,6 +18,15 @@ class Auth {
       expiresIn: this.#duration,
     });
   }
+
+  decodeToken(token) {
+    try {
+      const decodedToken = jwt.verify(token, this.#sectetKey);
+      return decodedToken;
+    } catch (err) {
+      return undefined;
+    }
+  }
 }
 
 // Exports

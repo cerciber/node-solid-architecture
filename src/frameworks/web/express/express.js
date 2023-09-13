@@ -11,14 +11,14 @@ const errorMiddleware = require('./middelwares/errorMiddleware');
 // Instance express app
 const app = express();
 
-// Middlewares
+// Middlewares standard
 app.use(express.json()); // Format Json Data
 app.use(cors()); // Allow comunication of all origins
 app.use(express.static('public')); // Allow static files on public (For Swagger)
 
 // Use routes
 app.use(paths.apiDocs.path, swagger.serve, swagger.UISetup); // Use Swagger UI
-app.use(paths.root.path, rootRoute); // Use API Routes
+app.use(paths.root.path, rootRoute.router); // Use API Routes
 
 // Manage errors
 app.use(errorMiddleware);

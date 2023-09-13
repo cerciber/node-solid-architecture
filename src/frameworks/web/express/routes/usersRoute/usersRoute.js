@@ -1,5 +1,4 @@
 // Imports
-const express = require('express');
 const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const {
   getUserslistController,
@@ -9,9 +8,7 @@ const {
   removeUserController,
 } = require('@src/adapters/controllers/user/userController');
 const paths = require('@src/utils/statics/paths');
-
-// Instance router
-const router = express.Router();
+const router = require('@src/frameworks/web/express/router')();
 
 /**
  * @swagger
@@ -74,7 +71,7 @@ router.get(paths.users.path, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get(`${paths.users.path}:id`, async (req, res) => {
+router.get(`${paths.users.path}/:id`, async (req, res) => {
   return sendResponse(req, res, await getUserByIdController(req.params));
 });
 
@@ -145,7 +142,7 @@ router.post(paths.users.path, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.put(`${paths.users.path}:id`, async (req, res) => {
+router.put(`${paths.users.path}/:id`, async (req, res) => {
   return sendResponse(
     req,
     res,
@@ -182,7 +179,7 @@ router.put(`${paths.users.path}:id`, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.delete(`${paths.users.path}:id`, async (req, res) => {
+router.delete(`${paths.users.path}/:id`, async (req, res) => {
   return sendResponse(req, res, await removeUserController(req.params));
 });
 
