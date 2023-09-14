@@ -12,72 +12,81 @@ const database = {
       id: '1',
       username: 'Juan123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
-      permissions: [
-        {
-          pathKey: 'users',
-          methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        },
-      ],
+      authorization: {
+        type: 'rol',
+        rol: 'admin',
+      },
     },
     {
       id: '2',
       username: 'Bob123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
-      permissions: [
-        {
-          pathKey: 'users',
-          methods: ['GET', 'POST'],
-        },
-      ],
+      authorization: {
+        type: 'rol',
+        rol: 'reader',
+      },
     },
     {
       id: '3',
       username: 'Fred123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
-      rol: 'reader',
-      permissions: [{ pathKey: 'users', methods: ['GET'] }],
+      authorization: {
+        type: 'rol',
+        rol: 'user-editor',
+      },
+    },
+    {
+      id: '4',
+      username: 'Maria123',
+      password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
+      authorization: {
+        type: 'custom',
+        permissions: [{ pathKeys: ['users'], methods: ['GET'] }],
+      },
     },
   ],
   rols: [
     {
-      id: 'admin',
-      type: 'action',
-      data: {
-        pathKeys: ['*'],
-        methods: ['*'],
-      },
+      id: '1',
+      key: 'admin',
+      permissions: [
+        {
+          pathKeys: ['*'],
+          methods: ['*'],
+        },
+      ],
     },
     {
-      id: 'reader',
-      type: 'action',
-      data: {
-        pathKeys: ['*'],
-        methods: ['GET'],
-      },
+      id: '2',
+      key: 'reader',
+      permissions: [
+        {
+          pathKeys: ['*'],
+          methods: ['GET'],
+        },
+      ],
     },
     {
-      id: 'user-editor',
-      type: 'action',
-      data: {
-        pathKeys: ['users'],
-        methods: ['GET', 'POST', 'PUT'],
-      },
+      id: '3',
+      key: 'user-editor',
+      permissions: [
+        {
+          pathKeys: ['users'],
+          methods: ['GET', 'POST', 'PUT'],
+        },
+      ],
     },
     {
-      id: 'user-reader-additor',
-      type: 'custom',
-      data: {
-        permissions: [
-          { pathKey: ['users'], methods: ['GET'] },
-          { pathKey: ['users'], methods: ['POST'] },
-        ],
-      },
+      id: '4',
+      key: 'user-reader-additor',
+      permissions: [{ pathKeys: ['users'], methods: ['GET'] }],
     },
   ],
   _constrains: {
     unique: {
       users: ['id', 'name'],
       authUsers: ['id', 'username'],
+      rols: ['id', 'key'],
     },
   },
 };

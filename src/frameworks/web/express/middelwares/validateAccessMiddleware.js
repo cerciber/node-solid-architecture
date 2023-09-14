@@ -14,6 +14,7 @@ const validateAccessMiddleware = async (req, res, next) => {
   // Validate access
   const validationResult = await validateAccessController(
     getBasePath(req.route.path),
+    req.method,
     req.headers
   );
 

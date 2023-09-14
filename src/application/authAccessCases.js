@@ -25,7 +25,7 @@ async function getPathDataCase(path) {
 }
 
 // validate Access Case
-async function validateAccessCase(token) {
+async function validateAccessCase(basePath, method, token) {
   // Decode token
   const payload = new Auth().decodeToken(token);
 
@@ -34,6 +34,8 @@ async function validateAccessCase(token) {
     // Return response
     return response.success(401, 'Access to this resource not allowed.', {});
   }
+
+  // Check if user have authorization to this request
 
   // Return response
   return response.success(200, 'Access to this resource allowed.', {

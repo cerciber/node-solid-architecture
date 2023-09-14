@@ -2,7 +2,7 @@
 const paths = {};
 
 // Define paths
-paths.root = { path: '/', public: false };
+paths.root = { path: '', public: false };
 
 paths.apiDocs = { path: `${paths.root.path}/api-docs`, public: true };
 paths.users = { path: `${paths.root.path}/users`, public: false };
