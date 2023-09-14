@@ -19,7 +19,7 @@ const {
 const BEARER_REGEX = /^Bearer\s+/i;
 
 // Get
-async function validateAccessController(basePath, headers) {
+async function validateAccessController(basePath, method, headers) {
   // Get input
   const { authorization } = headers;
 
@@ -27,6 +27,8 @@ async function validateAccessController(basePath, headers) {
   const basePathInputValidation = validate([
     [validateType, ['string', basePath], 'Base Path is not an string.'],
     [validateNonEmptyString, [basePath], 'Base Path is an empty string value.'],
+    [validateType, ['string', method], 'HTTP method is not an string.'],
+    [validateNonEmptyString, [method], 'HTTP method is an empty string value.'],
   ]);
 
   // Return incorrect validation input
@@ -104,6 +106,8 @@ async function validateAccessController(basePath, headers) {
 
   // Apply bussiness logic
   const validateAccessResponse = await validateAccessCase(
+    basePath,
+    method,
     authorization.split(BEARER_REGEX)[1]
   );
 
