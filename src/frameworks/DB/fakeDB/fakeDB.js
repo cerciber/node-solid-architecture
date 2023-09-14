@@ -1,6 +1,4 @@
 // Imports
-const { getKeyByValue } = require('@src/utils/functions/getKeyByValue');
-const paths = require('@src/utils/statics/paths');
 
 // Database simulation
 const database = {
@@ -16,7 +14,7 @@ const database = {
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
       permissions: [
         {
-          path: getKeyByValue(paths, paths.users),
+          pathKey: 'users',
           methods: ['GET', 'POST', 'PUT', 'DELETE'],
         },
       ],
@@ -27,7 +25,7 @@ const database = {
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
       permissions: [
         {
-          path: getKeyByValue(paths, paths.users),
+          pathKey: 'users',
           methods: ['GET', 'POST'],
         },
       ],
@@ -37,9 +35,43 @@ const database = {
       username: 'Fred123',
       password: '$2a$10$LA0U6snM1VGYuS9vyMkJnuUPv/QGStKwotT2BHnQShcAar5YVeQK6',
       rol: 'reader',
-      permissions: [
-        { path: getKeyByValue(paths, paths.users), methods: ['GET'] },
-      ],
+      permissions: [{ pathKey: 'users', methods: ['GET'] }],
+    },
+  ],
+  rols: [
+    {
+      id: 'admin',
+      type: 'action',
+      data: {
+        pathKeys: ['*'],
+        methods: ['*'],
+      },
+    },
+    {
+      id: 'reader',
+      type: 'action',
+      data: {
+        pathKeys: ['*'],
+        methods: ['GET'],
+      },
+    },
+    {
+      id: 'user-editor',
+      type: 'action',
+      data: {
+        pathKeys: ['users'],
+        methods: ['GET', 'POST', 'PUT'],
+      },
+    },
+    {
+      id: 'user-reader-additor',
+      type: 'custom',
+      data: {
+        permissions: [
+          { pathKey: ['users'], methods: ['GET'] },
+          { pathKey: ['users'], methods: ['POST'] },
+        ],
+      },
     },
   ],
   _constrains: {
