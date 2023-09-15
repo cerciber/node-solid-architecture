@@ -7,6 +7,7 @@ const paths = require('@src/utils/statics/paths');
 const swagger = require('@src/frameworks/UI/swagger/swagger');
 const rootRoute = require('./routes/rootRoute');
 const errorMiddleware = require('./middelwares/errorMiddleware');
+const pathNoFoundMiddleware = require('./middelwares/pathNoFoundMiddleware');
 
 // Instance express app
 const app = express();
@@ -19,6 +20,9 @@ app.use(express.static('public')); // Allow static files on public (For Swagger)
 // Use routes
 app.use(paths.apiDocs.path, swagger.serve, swagger.UISetup); // Use Swagger UI
 app.use(paths.root.path, rootRoute.router); // Use API Routes
+
+// Manage no existing paths
+app.use(pathNoFoundMiddleware);
 
 // Manage errors
 app.use(errorMiddleware);
