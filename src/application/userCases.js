@@ -46,14 +46,18 @@ async function addUserCase(newData) {
   // Add gateway data
   const gatewayUserAdded = await gateway.add(TABLE, newData);
 
-  // Check if user exist
-  if (!gatewayUserAdded) {
-    // Return response
+  // User added
+  if (gatewayUserAdded.status === 201) {
+    return response.success(201, 'User registered successfully.', {});
+  }
+
+  // User already exist
+  if (gatewayUserAdded.status === 409) {
     return response.success(409, 'User already exist.', {});
   }
 
   // Return response
-  return response.success(200, 'User added successfully.', {});
+  return gatewayUserAdded;
 }
 
 // Update by id

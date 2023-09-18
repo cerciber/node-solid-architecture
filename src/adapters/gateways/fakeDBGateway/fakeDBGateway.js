@@ -1,6 +1,7 @@
 // Imports
 const { v4: uuidv4 } = require('uuid');
 const { database } = require('@src/frameworks/DB/fakeDB/fakeDB');
+const response = require('@src/adapters/presenters/response');
 
 // List data
 async function getAll(tableName) {
@@ -30,14 +31,23 @@ async function getByAttributes(tableName, attributes) {
 
 // Add
 async function add(tableName, newItem) {
+  // Get table
   const table = database[tableName];
+
+  // Check if table no exist
   if (!table) {
-    return null;
+    return response.error(500, `Table ${table} no exist.`, {});
   }
+
+  // Check if user already exist
+
+  // Add new user
   const newId = uuidv4();
   const newItemWithId = { id: newId, ...newItem };
   table.push(newItemWithId);
-  return newItemWithId;
+
+  // Return new user
+  return response.success(200, 'Field added successfully.', {});
 }
 
 // Update by id

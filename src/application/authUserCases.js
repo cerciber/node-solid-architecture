@@ -49,19 +49,23 @@ async function signupUserAuthCase(username, password) {
   const authUser = new AuthUser(undefined, username, password, false);
 
   // Add gateway data
-  const gatewayUserAdded = await gateway.add(TABLE, {
+  const gatewayUserAuthAdded = await gateway.add(TABLE, {
     username: authUser.username,
     password: authUser.getPassword(),
   });
 
-  // Check if user exist
-  if (!gatewayUserAdded) {
-    // Return response
+  // User added
+  if (gatewayUserAuthAdded.status === 201) {
+    return response.success(201, 'User Auth registered successfully.', {});
+  }
+
+  // User already exist
+  if (gatewayUserAuthAdded.status === 409) {
     return response.success(409, 'User Auth already exist.', {});
   }
 
   // Return response
-  return response.success(201, 'User Auth registered successfully.', {});
+  return gatewayUserAuthAdded;
 }
 
 // Exports
