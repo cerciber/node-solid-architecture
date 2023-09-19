@@ -3,16 +3,16 @@ const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const {
   signinUserAuthController,
   signupUserAuthController,
-} = require('@src/adapters/controllers/auth/authUserController');
+} = require('@src/adapters/controllers/apisController/fakeApiControllers/auth/authUserController');
 const paths = require('@src/utils/statics/paths');
 const router = require('@src/frameworks/web/express/router')();
 
 /**
  * @swagger
- * ${authSignIn}:
+ * ${fakeApiAuthSignIn}:
  *   post:
  *     tags:
- *       - Auth
+ *       - FakeAPI
  *     summary: Authenticate user on system.
  *     description: Validate user Authentication.
  *     requestBody:
@@ -41,18 +41,18 @@ const router = require('@src/frameworks/web/express/router')();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post(paths.authSignIn.path, async (req, res) => {
+router.post(paths.fakeApiAuthSignIn.path, async (req, res) => {
   return sendResponse(req, res, await signinUserAuthController(req.body));
 });
 
 /**
  * @swagger
- * ${authSignUp}:
+ * ${fakeApiAuthSignUp}:
  *   post:
  *     tags:
- *       - Auth
- *     summary: Regiter an user authentication
- *     description: Regiter an user authentication with the provided data.
+ *       - FakeAPI
+ *     summary: Register an user authentication
+ *     description: Register an user authentication with the provided data.
  *     requestBody:
  *       required: true
  *       content:
@@ -79,7 +79,7 @@ router.post(paths.authSignIn.path, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post(paths.authSignUp.path, async (req, res) => {
+router.post(paths.fakeApiAuthSignUp.path, async (req, res) => {
   return sendResponse(req, res, await signupUserAuthController(req.body));
 });
 

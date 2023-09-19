@@ -1,6 +1,6 @@
 // Imports
 const response = require('@src/adapters/presenters/response');
-const Auth = require('@src/entities/Auth');
+const Auth = require('@src/entities/fakeApiEntities/Auth');
 const paths = require('@src/utils/statics/paths');
 const gateway = require('@src/adapters/gateways/fakeDBGateway/fakeDBGateway');
 

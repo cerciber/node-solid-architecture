@@ -4,7 +4,7 @@ const _ = require('lodash');
 // Exports
 module.exports = _.cloneDeep({
   User: {
-    title: 'User',
+    title: 'fakeApiUser',
     type: 'object',
     properties: {
       id: {

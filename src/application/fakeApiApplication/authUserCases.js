@@ -1,8 +1,8 @@
 // Imports
 const gateway = require('@src/adapters/gateways/fakeDBGateway/fakeDBGateway');
 const response = require('@src/adapters/presenters/response');
-const Auth = require('@src/entities/Auth');
-const AuthUser = require('@src/entities/AuthUser');
+const Auth = require('@src/entities/fakeApiEntities/Auth');
+const AuthUser = require('@src/entities/fakeApiEntities/AuthUser');
 
 // Define table users auth
 const TABLE = 'authUsers';

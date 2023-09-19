@@ -4,7 +4,7 @@ const _ = require('lodash');
 // Exports
 module.exports = _.cloneDeep({
   TokenPayload: {
-    title: 'TokenPayload',
+    title: 'fakeApiTokenPayload',
     type: 'object',
     properties: {
       id: {
