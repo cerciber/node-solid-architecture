@@ -2,7 +2,7 @@
 const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const {
   validateAccessController,
-} = require('@src/adapters/controllers/auth/validateAccessController');
+} = require('@src/adapters/controllers/apisController/fakeApiControllers/auth/validateAccessController');
 
 // Get get base path from express router path
 function getBasePath(expressRouterPath) {

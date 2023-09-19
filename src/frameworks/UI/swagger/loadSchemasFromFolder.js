@@ -33,5 +33,23 @@ function loadSchemasFromFolder(folderPath) {
   return schemas;
 }
 
+// Load schemas from multiple folders
+function loadSchemasFromFolders(folderPaths) {
+  // Create an object to store schemas
+  const schemas = {};
+
+  // Iterate through each folder path
+  folderPaths.forEach((folderPath) => {
+    // Use the loadSchemasFromFolder function to load schemas from the current folder
+    const folderSchemas = loadSchemasFromFolder(folderPath);
+
+    // Merge the schemas from the current folder into the overall schemas object
+    Object.assign(schemas, folderSchemas);
+  });
+
+  // Return the combined schemas object
+  return schemas;
+}
+
 // Exports
-module.exports = loadSchemasFromFolder;
+module.exports = { loadSchemasFromFolder, loadSchemasFromFolders };

@@ -3,7 +3,7 @@ const response = require('@src/adapters/presenters/response');
 const {
   signinUserAuthCase,
   signupUserAuthCase,
-} = require('@src/application/authUserCases');
+} = require('@src/application/fakeApiApplication/authUserCases');
 const {
   validate,
   validateByStatus,

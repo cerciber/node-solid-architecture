@@ -6,16 +6,16 @@ const {
   addUserController,
   updateUserController,
   removeUserController,
-} = require('@src/adapters/controllers/user/userController');
+} = require('@src/adapters/controllers/apisController/fakeApiControllers/user/userController');
 const paths = require('@src/utils/statics/paths');
 const router = require('@src/frameworks/web/express/router')();
 
 /**
  * @swagger
- * ${users}:
+ * ${fakeApiUsers}:
  *   get:
  *     tags:
- *       - Users
+ *       - FakeAPI
  *     summary: Get the list of users
  *     description: Returns a list of all registered users.
  *     responses:
@@ -32,16 +32,16 @@ const router = require('@src/frameworks/web/express/router')();
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get(paths.users.path, async (req, res) => {
+router.get(paths.fakeApiUsers.path, async (req, res) => {
   return sendResponse(req, res, await getUserslistController());
 });
 
 /**
  * @swagger
- * ${users}/{id}:
+ * ${fakeApiUsers}/{id}:
  *   get:
  *     tags:
- *       - Users
+ *       - FakeAPI
  *     summary: Get a user by ID
  *     description: Retrieves a user based on the provided ID.
  *     parameters:
@@ -71,16 +71,16 @@ router.get(paths.users.path, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.get(`${paths.users.path}/:id`, async (req, res) => {
+router.get(`${paths.fakeApiUsers.path}/:id`, async (req, res) => {
   return sendResponse(req, res, await getUserByIdController(req.params));
 });
 
 /**
  * @swagger
- * ${users}:
+ * ${fakeApiUsers}:
  *   post:
  *     tags:
- *       - Users
+ *       - FakeAPI
  *     summary: Create a new user
  *     description: Creates a new user with the provided data.
  *     requestBody:
@@ -103,16 +103,16 @@ router.get(`${paths.users.path}/:id`, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.post(paths.users.path, async (req, res) => {
+router.post(paths.fakeApiUsers.path, async (req, res) => {
   return sendResponse(req, res, await addUserController(req.body));
 });
 
 /**
  * @swagger
- * ${users}/{id}:
+ * ${fakeApiUsers}/{id}:
  *   put:
  *     tags:
- *       - Users
+ *       - FakeAPI
  *     summary: Update a user by ID
  *     description: Updates an existing user with the provided data.
  *     parameters:
@@ -142,7 +142,7 @@ router.post(paths.users.path, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.put(`${paths.users.path}/:id`, async (req, res) => {
+router.put(`${paths.fakeApiUsers.path}/:id`, async (req, res) => {
   return sendResponse(
     req,
     res,
@@ -152,10 +152,10 @@ router.put(`${paths.users.path}/:id`, async (req, res) => {
 
 /**
  * @swagger
- * ${users}/{id}:
+ * ${fakeApiUsers}/{id}:
  *   delete:
  *     tags:
- *       - Users
+ *       - FakeAPI
  *     summary: Delete a user by ID
  *     description: Deletes an existing user based on the provided ID.
  *     parameters:
@@ -179,7 +179,7 @@ router.put(`${paths.users.path}/:id`, async (req, res) => {
  *         allOf:
  *           - $ref: '#/components/responses/500'
  */
-router.delete(`${paths.users.path}/:id`, async (req, res) => {
+router.delete(`${paths.fakeApiUsers.path}/:id`, async (req, res) => {
   return sendResponse(req, res, await removeUserController(req.params));
 });
 

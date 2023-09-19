@@ -3,7 +3,7 @@ const response = require('@src/adapters/presenters/response');
 const {
   validateAccessCase,
   getPathDataCase,
-} = require('@src/application/authAccessCases');
+} = require('@src/application/fakeApiApplication/authAccessCases');
 const {
   validate,
   validateByStatus,

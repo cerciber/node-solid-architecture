@@ -6,7 +6,7 @@ const {
   addUserCase,
   updateUserCase,
   removeUserCase,
-} = require('@src/application/userCases');
+} = require('@src/application/fakeApiApplication/userCases');
 const {
   validate,
   validateByStatus,

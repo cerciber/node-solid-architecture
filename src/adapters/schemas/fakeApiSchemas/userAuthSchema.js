@@ -3,10 +3,13 @@ const _ = require('lodash');
 
 // Exports
 module.exports = _.cloneDeep({
-  UserAuthNoId: {
-    title: 'UserAuthNoId',
+  UserAuth: {
+    title: 'fakeApiUserAuth',
     type: 'object',
     properties: {
+      id: {
+        type: 'string',
+      },
       username: {
         type: 'string',
       },
@@ -15,9 +18,10 @@ module.exports = _.cloneDeep({
       },
     },
     example: {
+      id: '1',
       username: 'cesar123',
       password: '7Y87YH8GG6Y8',
     },
-    required: ['username', 'password'],
+    required: ['id', 'username', 'password'],
   },
 });

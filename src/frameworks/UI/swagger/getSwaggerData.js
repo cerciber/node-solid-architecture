@@ -1,12 +1,16 @@
 // Imports
 const swaggerJsdoc = require('swagger-jsdoc');
 const paths = require('@src/utils/statics/paths');
-const loadSchemasFromFolder = require('./loadSchemasFromFolder');
+const constants = require('@src/utils/statics/constants');
+const {
+  loadSchemasFromFolder,
+  loadSchemasFromFolders,
+} = require('./loadSchemasFromFolder');
 
 // Get Swagger Data
 function getSwaggerData() {
   // Load schemas
-  const dataSchemas = loadSchemasFromFolder('@src/adapters/schemas');
+  const dataSchemas = loadSchemasFromFolders(constants.SCHEMAS_SCAN_PATHS);
 
   // Load response schemas
   const responseSchemas = loadSchemasFromFolder(
@@ -15,7 +19,7 @@ function getSwaggerData() {
 
   // Swagger data import
   // eslint-disable-next-line global-require
-  const swaggerData = require('./swaggerData.json');
+  const swaggerData = require('@src/utils/statics/swagger');
 
   // Set Schemas
   swaggerData.components.schemas = dataSchemas;
@@ -26,7 +30,7 @@ function getSwaggerData() {
   // Set Swagger config
   const swaggerDocs = swaggerJsdoc({
     swaggerDefinition: swaggerData,
-    apis: ['./src/frameworks/web/express/routes/**/*.js'],
+    apis: constants.SWAGGER_SCAN_PATHS,
   });
 
   // Change paths references
