@@ -5,6 +5,7 @@ const cors = require('cors');
 const config = require('@src/utils/statics/config');
 const paths = require('@src/utils/statics/paths');
 const swagger = require('@src/frameworks/UI/swagger/swagger');
+const logger = require('@src/frameworks/logger/loggerCaller');
 const rootRoute = require('./routes/rootRoute');
 const errorMiddleware = require('./middelwares/errorMiddleware');
 const pathNoFoundMiddleware = require('./middelwares/pathNoFoundMiddleware');
@@ -28,8 +29,9 @@ app.use(pathNoFoundMiddleware);
 app.use(errorMiddleware);
 
 // Listen
-app.listen(config.frameworks.web.express.port, () => {
-  const message = `Server running in mode: ${config.enviroment} at port: ${config.frameworks.web.express.port}.`;
-  // eslint-disable-next-line no-console
-  console.log(message);
+const server = app.listen(config.frameworks.web.express.port, () => {
+  const { port } = server.address();
+  const message = `Server running.`;
+  const content = `URL: http://localhost:${port}.\nEnviroment: ${config.enviroment}.`;
+  logger.info(message, logger.types.SYSTEM, 'express', 'runServer', content);
 });

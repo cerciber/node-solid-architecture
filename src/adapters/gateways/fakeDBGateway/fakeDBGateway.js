@@ -47,7 +47,7 @@ async function add(tableName, newItem) {
   table.push(newItemWithId);
 
   // Return new user
-  return response.success(200, 'Field added successfully.', {});
+  return response.success(201, 'Field added successfully.', {});
 }
 
 // Update by id
