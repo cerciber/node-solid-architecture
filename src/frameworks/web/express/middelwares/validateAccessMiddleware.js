@@ -3,6 +3,7 @@ const sendResponse = require('@src/frameworks/web/express/sendResponse');
 const {
   validateAccessController,
 } = require('@src/adapters/controllers/apisController/fakeApiControllers/auth/validateAccessController');
+const logger = require('@src/frameworks/logger/loggerCaller');
 
 // Get get base path from express router path
 function getBasePath(expressRouterPath) {
@@ -11,6 +12,15 @@ function getBasePath(expressRouterPath) {
 
 // Express validate access middleware
 const validateAccessMiddleware = async (req, res, next) => {
+  // Logs
+  logger.info(
+    `Request on endpoint [${req.method}]:${req.originalUrl}`,
+    logger.types.USER,
+    'endpoint',
+    'request',
+    `Input: ${JSON.stringify({ body: req.body, params: req.params }, null, 2)}`
+  );
+
   // Validate access
   const validationResult = await validateAccessController(
     getBasePath(req.route.path),
@@ -27,7 +37,6 @@ const validateAccessMiddleware = async (req, res, next) => {
   if (!req.body) {
     req.body = {};
   }
-
   if (validationResult.body?.tokenPayload) {
     req.tokenPayload = validationResult.body.tokenPayload;
   }
